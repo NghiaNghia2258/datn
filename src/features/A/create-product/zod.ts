@@ -1,4 +1,8 @@
 import { z } from "zod";
+export const ProductSpecificationAttributeSchema = z.object({
+  attributeName: z.string().min(1, { message: "Tên thuộc tính không được để trống" }),
+  attributeValue: z.string().min(1, { message: "Giá trị thuộc tính không được để trống" }),
+});
 
 export const VariantCreateSchema = z.object({
   propertyValue1: z.string(),
@@ -28,7 +32,8 @@ export const ProductCreateSchema = z.object({
   productVariants: z.array(VariantCreateSchema),
   removedUrls: z.array(z.string()),
   existingUrls: z.array(z.string()),
-  fileUpload: z.any()
+  fileUpload: z.any(),
+  specifications: z.array(ProductSpecificationAttributeSchema),
 });
 
   export type IProductCreateSchema = z.infer<typeof ProductCreateSchema>;

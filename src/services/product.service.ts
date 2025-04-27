@@ -74,7 +74,7 @@ export default class ProductService{
       console.log("Get one id : " , id);
       await delay(2000);
       const productCreateObject:IProductCreateSchema = {
-        name: "Áo thun nam cổ tròn",
+        name: "Áo thun nam cổ tròn 222",
         categoryId: "cat123",
         price: 250000,
         tax: 8,
@@ -89,11 +89,11 @@ export default class ProductService{
         propertyName1: "Màu sắc",
         propertyName2: "Kích cỡ",
         propertyValue1: ["Trắng", "Đen"],
-        propertyValue2: ["S", "M"],
+        propertyValue2: ["S", "M", "L"],
         productVariants: [
           {
             propertyValue1: "Trắng",
-            propertyValue2: "S",
+            propertyValue2: "XL",
             price: 250000,
             stock: 50,
             isActivate: false,
@@ -129,7 +129,34 @@ export default class ProductService{
           "https://example.com/img/product-front.jpg",
           "https://example.com/img/product-back.jpg"
         ],
-        fileUpload: null
+        fileUpload: null,
+        specifications: [
+          {
+            attributeName: "Thương hiệu",
+            attributeValue: "TECHSHOP",
+          },
+          {
+            attributeName: "Chất liệu",
+            attributeValue: "Cotton 100%",
+          },
+          {
+            attributeName: "Kiểu dáng",
+            attributeValue: "Áo thun cổ tròn, form regular fit",
+          },
+          {
+            attributeName: "Xuất xứ",
+            attributeValue: "Việt Nam",
+          },
+          {
+            attributeName: "Trọng lượng",
+            attributeValue: "250g",
+          },
+          {
+            attributeName: "Hướng dẫn bảo quản",
+            attributeValue:
+              "Giặt máy ở nhiệt độ thường, không sử dụng chất tẩy, phơi trong bóng râm",
+          },
+        ],
       };
       return productCreateObject
     }

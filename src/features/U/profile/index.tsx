@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Box,
   Container,
@@ -25,10 +25,6 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
 } from "@mui/material";
 
 import {
@@ -40,7 +36,6 @@ import {
   CalendarToday,
   Favorite,
   ShoppingBag,
-  History,
   Settings,
   Notifications,
   PhotoCamera,
@@ -124,7 +119,7 @@ export default function UserProfile() {
   const [editedUserData, setEditedUserData] = useState(userData);
   const [openDialog, setOpenDialog] = useState(false);
 
-  const handleTabChange = (event, newValue) => {
+  const handleTabChange = (_, newValue: any) => {
     setTabValue(newValue);
   };
 
@@ -140,7 +135,7 @@ export default function UserProfile() {
     // Display success message or update userData state
   };
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: any) => {
     const { name, value } = e.target;
     setEditedUserData({
       ...editedUserData,

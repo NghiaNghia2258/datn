@@ -27,10 +27,11 @@ import {
   CheckCircle,
 } from "@mui/icons-material";
 import { useProductDetail } from "../../../../context/U/product-detail";
+import { formatPrice } from "../../../../utils/format-price";
 
 const ProductDetailMainSection: React.FC = () => {
   const {
-    productData,
+    product,
     selectedColor,
     selectedSize,
     currentPrice,
@@ -46,35 +47,21 @@ const ProductDetailMainSection: React.FC = () => {
   } = useProductDetail();
   const theme = useTheme();
 
-  const sampleImages = [
-    "https://th.bing.com/th/id/OIP.S5qtW6fj3t860vVVY7VqOAHaHa?w=188&h=187&c=7&r=0&o=5&dpr=1.3&pid=1.7",
-    "https://th.bing.com/th/id/OIP.wTNQy7nqJePNBmiq5gRQpAHaHe?w=221&h=220&c=7&r=0&o=5&dpr=1.3&pid=1.7",
-    "https://th.bing.com/th/id/OIP.EfcrjR779ZXKcExKvGTAEQAAAA?w=118&h=220&c=7&r=0&o=5&dpr=1.3&pid=1.7",
-  ];
-
+  const images = product.productVariants.map((v) => v.image);
   const [currentImage, setCurrentImage] = React.useState(0);
   const handleNextImage = () => {
-    setCurrentImage((prev) => (prev + 1) % sampleImages.length);
+    setCurrentImage((prev) => (prev + 1) % images.length);
   };
 
   const handlePrevImage = () => {
-    setCurrentImage(
-      (prev) => (prev - 1 + sampleImages.length) % sampleImages.length
-    );
+    setCurrentImage((prev) => (prev - 1 + images.length) % images.length);
   };
   const handleThumbnailClick = (index: number) => {
     setCurrentImage(index);
   };
 
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat("vi-VN", {
-      style: "currency",
-      currency: "VND",
-    }).format(price);
-  };
-
   // Tìm giá và tồn kho dựa trên biến thể đã chọn
-  const selectedVariant = productData.productVariants.find(
+  const selectedVariant = product.productVariants.find(
     (variant) =>
       variant.propertyValue1 === selectedColor &&
       variant.propertyValue2 === selectedSize
@@ -96,8 +83,8 @@ const ProductDetailMainSection: React.FC = () => {
             >
               <Box
                 component="img"
-                src={selectedVariant?.image || sampleImages[currentImage]}
-                alt={`${productData.name} - ${selectedColor} ${selectedSize}`}
+                src={selectedVariant?.image || images[currentImage]}
+                alt={`${product.name} - ${selectedColor} ${selectedSize}`}
                 sx={{
                   width: "100%",
                   height: "100%",
@@ -138,7 +125,7 @@ const ProductDetailMainSection: React.FC = () => {
 
           {/* Image Thumbnails */}
           <Box sx={{ display: "flex", mt: 2, overflow: "auto", gap: 1 }}>
-            {sampleImages.map((img, index) => (
+            {images.map((img, index) => (
               <Box
                 key={index}
                 component="img"
@@ -163,7 +150,7 @@ const ProductDetailMainSection: React.FC = () => {
         {/* Product Info */}
         <Grid item xs={12} md={6}>
           <Typography variant="h4" sx={{ fontWeight: "bold", mb: 1 }}>
-            {productData.name}
+            {product.name}
           </Typography>
 
           <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
@@ -190,13 +177,13 @@ const ProductDetailMainSection: React.FC = () => {
 
           {/* Màu sắc */}
           <Typography variant="subtitle1" sx={{ fontWeight: "bold", mb: 1 }}>
-            {productData.propertyName1}:
+            {product.propertyName1}:
           </Typography>
           <Box sx={{ display: "flex", gap: 1, mb: 3 }}>
-            {productData.propertyValue1.map((color) => {
+            {product.propertyValue1.map((color) => {
               const isActiveColor = color === selectedColor;
               // Kiểm tra xem màu này có tồn tại biến thể nào không
-              const hasVariants = productData.productVariants.some(
+              const hasVariants = product.productVariants.some(
                 (v) => v.propertyValue1 === color
               );
 
@@ -233,12 +220,12 @@ const ProductDetailMainSection: React.FC = () => {
 
           {/* Kích cỡ */}
           <Typography variant="subtitle1" sx={{ fontWeight: "bold", mb: 1 }}>
-            {productData.propertyName2}:
+            {product.propertyName2}:
           </Typography>
           <Box sx={{ display: "flex", gap: 1, mb: 3, flexWrap: "wrap" }}>
-            {productData.propertyValue2.map((size) => {
+            {product.propertyValue2.map((size) => {
               // Kiểm tra xem có biến thể nào cho màu và kích cỡ này không
-              const hasVariant = productData.productVariants.some(
+              const hasVariant = product.productVariants.some(
                 (v) =>
                   v.propertyValue1 === selectedColor &&
                   v.propertyValue2 === size
@@ -363,7 +350,7 @@ const ProductDetailMainSection: React.FC = () => {
 
           {/* Product Description Short */}
           <Typography variant="body1" paragraph>
-            {productData.description}
+            {product.description}
           </Typography>
           <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
             <CheckCircle
@@ -387,7 +374,7 @@ const ProductDetailMainSection: React.FC = () => {
               sx={{ mr: 1, color: "success.main" }}
             />
             <Typography variant="body2">
-              Trọng lượng: {productData.weight} {productData.unitWeight}
+              Trọng lượng: {product.weight} {product.unitWeight}
             </Typography>
           </Box>
         </Grid>

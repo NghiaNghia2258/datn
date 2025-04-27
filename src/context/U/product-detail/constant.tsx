@@ -16,6 +16,33 @@ export const productData = {
   propertyName2: "Kích cỡ",
   propertyValue1: ["Trắng", "Đen"],
   propertyValue2: ["S", "M"],
+  specifications: [
+    {
+      attributeName: "Thương hiệu",
+      attributeValue: "TECHSHOP",
+    },
+    {
+      attributeName: "Chất liệu",
+      attributeValue: "Cotton 100%",
+    },
+    {
+      attributeName: "Kiểu dáng",
+      attributeValue: "Áo thun cổ tròn, form regular fit",
+    },
+    {
+      attributeName: "Xuất xứ",
+      attributeValue: "Việt Nam",
+    },
+    {
+      attributeName: "Trọng lượng",
+      attributeValue: "250g",
+    },
+    {
+      attributeName: "Hướng dẫn bảo quản",
+      attributeValue:
+        "Giặt máy ở nhiệt độ thường, không sử dụng chất tẩy, phơi trong bóng râm",
+    },
+  ],
   productVariants: [
     {
       propertyValue1: "Trắng",

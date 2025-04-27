@@ -80,7 +80,7 @@ const userRoutes = [
     element: <Home />,
   },
   {
-    path: USER_URLS.PRODUCT_DETAIL,
+    path: `${USER_URLS.PRODUCT_DETAIL}/:id`,
     element: <ProductDetail />,
   },
   {
