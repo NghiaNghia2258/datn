@@ -1,24 +1,8 @@
-import { useState } from "react";
-import {
-  Typography,
-  Button,
-  InputBase,
-  Container,
-  Grid,
-  Card,
-  CardMedia,
-  CardContent,
-  CardActions,
-  Box,
-  Paper,
-  useTheme,
-} from "@mui/material";
+import { Container } from "@mui/material";
 
 // Icons
-import { Favorite as FavoriteIcon } from "@mui/icons-material";
 import BannerSlider from "./banner-slider";
 import Categories from "./categories";
-import FeaturedProducts from "./products";
 import ProductsList from "./products";
 import Promotions from "./promotions";
 
@@ -133,6 +117,7 @@ const HomePage = () => {
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
       <BannerSlider banners={banners} />
       <Categories categories={categories} />
+      <ProductsList title="Có thể bạn sẽ thích" products={featuredProducts} />
       <ProductsList title="Sản phẩm nổi bật" products={featuredProducts} />
       <ProductsList title="Sản phẩm bán chạy" products={bestSellers} />
       <Promotions

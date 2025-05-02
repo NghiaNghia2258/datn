@@ -15,8 +15,11 @@ import { Favorite, FavoriteBorder, ShoppingCart } from "@mui/icons-material";
 import { FC, useState } from "react";
 import { Product } from "../../../../context/U/store-products/store-product.response";
 import { formatPrice } from "../../../../utils/format-price";
+import { useNavigateCommon } from "../../../../hooks/navigate";
+import { USER_URLS } from "../../../../routes/AppRoutes";
 type ProductCardProps = Product;
 export const ProductCard: FC<ProductCardProps> = ({
+  id,
   discount,
   isNew,
   images,
@@ -29,7 +32,7 @@ export const ProductCard: FC<ProductCardProps> = ({
   isBestSeller,
 }) => {
   const [favorite, setFavorite] = useState(false);
-
+  const navigate = useNavigateCommon();
   const handleFavoriteClick = () => {
     setFavorite(!favorite);
   };
@@ -45,6 +48,9 @@ export const ProductCard: FC<ProductCardProps> = ({
           transform: "translateY(-5px)",
           boxShadow: "0 8px 20px rgba(0,0,0,0.15)",
         },
+      }}
+      onClick={() => {
+        navigate(`${USER_URLS.PRODUCT_DETAIL}/${id}`);
       }}
     >
       {discount > 0 && (

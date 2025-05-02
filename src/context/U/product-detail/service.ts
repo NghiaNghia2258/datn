@@ -39,4 +39,15 @@ export default class ProductDetailService {
         };
         return res;
       }
+      static async AddToCart(productId:string, property1: string, property2: string, quantity: number): Promise<boolean>{
+        const request = {productId,property1,property2,quantity}
+        console.log("Add to cart",request);
+        await delay(1500);
+        return true;
+      }
+      static async customeReview(reviewContent: any): Promise<boolean> {
+        await delay(1500);
+        console.log("Review: ", reviewContent);
+        return true;
+      }
 }

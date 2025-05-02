@@ -3,130 +3,111 @@ import {
   Toolbar,
   Typography,
   IconButton,
-  InputBase,
   Badge,
-  Tabs,
-  Tab,
   Box,
-  Container,
-  useTheme,
-  useMediaQuery,
+  styled,
+  InputBase,
 } from "@mui/material";
 import {
   Search as SearchIcon,
   ShoppingCart as ShoppingCartIcon,
   Person as PersonIcon,
-  Home as HomeIcon,
+  Menu as MenuIcon,
+  Notifications as NotificationsIcon,
+  Favorite as FavoriteIcon,
+  Search,
 } from "@mui/icons-material";
+import { useState } from "react";
 
+const SearchIconWrapper = styled("div")(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: "100%",
+  position: "absolute",
+  pointerEvents: "none",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+}));
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: "inherit",
+  "& .MuiInputBase-input": {
+    padding: theme.spacing(1, 1, 1, 0),
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("md")]: {
+      width: "20ch",
+    },
+  },
+}));
 const Header = () => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const [searchText, setSearchText] = useState("");
 
   return (
-    <AppBar position="static" color="default" elevation={1}>
+    <AppBar position="fixed" color="primary" elevation={0}>
       <Toolbar>
+        <IconButton
+          size="large"
+          edge="start"
+          color="inherit"
+          aria-label="open drawer"
+          sx={{ mr: 2, display: { sm: "flex", md: "none" } }}
+        >
+          <MenuIcon />
+        </IconButton>
+
         <Typography
           variant="h6"
           noWrap
           component="div"
-          sx={{
-            display: { xs: "none", sm: "block" },
-            flexGrow: 1,
-            fontWeight: "bold",
-            color: theme.palette.primary.main,
-          }}
+          sx={{ display: { xs: "none", sm: "block" }, fontWeight: "bold" }}
         >
-          TECH SHOP
+          TechStore
         </Typography>
 
-        <Box sx={{ flexGrow: 1, display: { xs: "flex", sm: "none" } }}>
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{ fontWeight: "bold", color: theme.palette.primary.main }}
-          >
-            TECH
-          </Typography>
-        </Box>
-
-        <Box
-          sx={{
-            position: "relative",
-            borderRadius: theme.shape.borderRadius,
-            backgroundColor: "#f1f3f4",
-            "&:hover": { backgroundColor: "#e4e6e8" },
-            mr: 2,
-            ml: 0,
-            width: "100%",
-            display: { xs: "none", sm: "flex" },
-            maxWidth: "400px",
-          }}
-        >
-          <IconButton sx={{ p: 1 }} aria-label="search">
+        <Search>
+          <SearchIconWrapper>
             <SearchIcon />
-          </IconButton>
-          <InputBase
-            placeholder="Tìm sản phẩm..."
-            sx={{ ml: 1, flex: 1 }}
-            inputProps={{ "aria-label": "tìm sản phẩm" }}
+          </SearchIconWrapper>
+          <StyledInputBase
+            placeholder="Tìm kiếm sản phẩm..."
+            inputProps={{ "aria-label": "search" }}
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
           />
-        </Box>
+        </Search>
 
-        <Box sx={{ display: "flex" }}>
-          <IconButton
-            size="large"
-            aria-label="shows cart items"
-            color="inherit"
-          >
-            <Badge badgeContent={4} color="error">
+        <Box sx={{ flexGrow: 1 }} />
+
+        <Box sx={{ display: { xs: "none", md: "flex" } }}>
+          <IconButton size="large" color="inherit">
+            <Badge badgeContent={3} color="error">
+              <NotificationsIcon />
+            </Badge>
+          </IconButton>
+          <IconButton size="large" color="inherit">
+            <Badge badgeContent={5} color="error">
+              <FavoriteIcon />
+            </Badge>
+          </IconButton>
+          <IconButton size="large" color="inherit">
+            <Badge badgeContent={2} color="error">
               <ShoppingCartIcon />
             </Badge>
           </IconButton>
-          <IconButton
-            size="large"
-            edge="end"
-            aria-label="account of current user"
-            color="inherit"
-          >
+          <IconButton size="large" color="inherit">
             <PersonIcon />
           </IconButton>
         </Box>
-      </Toolbar>
 
-      {!isMobile && (
-        <Toolbar
-          variant="dense"
-          sx={{
-            backgroundColor: theme.palette.primary.main,
-            color: "white",
-            minHeight: "40px",
-          }}
-        >
-          <Container>
-            <Tabs
-              value={1}
-              onChange={() => {}}
-              variant="scrollable"
-              scrollButtons="auto"
-              textColor="inherit"
-              indicatorColor="secondary"
-            >
-              <Tab
-                label="Trang chủ"
-                icon={<HomeIcon fontSize="small" />}
-                iconPosition="start"
-              />
-              <Tab label="Điện thoại" />
-              <Tab label="Laptop" />
-              <Tab label="Máy tính bảng" />
-              <Tab label="Phụ kiện" />
-              <Tab label="Đồng hồ" />
-              <Tab label="Khuyến mãi" />
-            </Tabs>
-          </Container>
-        </Toolbar>
-      )}
+        <Box sx={{ display: { xs: "flex", md: "none" } }}>
+          <IconButton size="large" color="inherit">
+            <Badge badgeContent={2} color="error">
+              <ShoppingCartIcon />
+            </Badge>
+          </IconButton>
+        </Box>
+      </Toolbar>
     </AppBar>
   );
 };

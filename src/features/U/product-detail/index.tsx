@@ -28,6 +28,8 @@ import CustomBreadcrumbs from "../../../components/common/bread-crumb";
 import ProductDetailMainSection from "./main-section";
 import { useProductDetail } from "../../../context/U/product-detail";
 import { formatPrice } from "../../../utils/format-price";
+import ReviewModal from "./review";
+import ComboExample from "./test";
 
 // Các sản phẩm tương tự
 const relatedProducts = [
@@ -58,11 +60,11 @@ const relatedProducts = [
 ];
 
 const ProductDetailPage = () => {
-  const { reviews, product } = useProductDetail();
+  const { reviews, product, snackbarOpen, setSnackbarOpen } =
+    useProductDetail();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [tabValue, setTabValue] = useState(0);
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   const categories = ["Áo", "Áo polo"];
   const specifications = product.specifications;
@@ -74,6 +76,7 @@ const ProductDetailPage = () => {
         productName={product.name}
       />
       <ProductDetailMainSection />
+      <ComboExample />
       {/* Product Details Tabs */}
       <Box sx={{ mt: 6 }}>
         <Paper sx={{ borderRadius: 2, overflow: "hidden" }} elevation={1}>
@@ -86,7 +89,6 @@ const ProductDetailPage = () => {
           >
             <Tab label="Chi tiết sản phẩm" id="tab-0" />
             <Tab label="Đánh giá (25)" id="tab-1" />
-            <Tab label="Hướng dẫn chọn size" id="tab-2" />
           </Tabs>
 
           {/* Chi tiết sản phẩm */}
@@ -193,8 +195,7 @@ const ProductDetailPage = () => {
                       </Box>
                     </Box>
                   </Box>
-
-                  <Button variant="contained">Viết đánh giá</Button>
+                  <ReviewModal />
                 </Box>
 
                 <Divider sx={{ mb: 3 }} />

@@ -14,8 +14,8 @@ import ProductService from "../../../services/product.service";
 
 interface ProductDetailContextType {
   product: IProductCreateSchema;
-  selectedColor: string;
-  selectedSize: string;
+  selectedProperty1: string;
+  selectedProperty2: string;
   currentPrice: number;
   currentStock: number;
   quantity: number;
@@ -23,13 +23,17 @@ interface ProductDetailContextType {
   favorite: boolean;
   handleQuantityChange: (amount: number) => void;
   handleAddToCart: () => void;
-  handleColorChange: (color: string) => void;
-  handleSizeChange: (size: string) => void;
+  handleProperty1Change: (Property1: string) => void;
+  handleProperty2Change: (Property2: string) => void;
   setFavorite: React.Dispatch<React.SetStateAction<boolean>>;
   getReviews: () => Promise<void>;
   getProductDetail: () => Promise<void>;
   reviews: Review[];
   isLoadingReviews: boolean;
+  snackbarOpen: boolean;
+  setSnackbarOpen: (value: boolean) => void;
+  setOpenPopupReview: (value: boolean) => void;
+  openPopupReview: boolean;
 }
 
 export const ProductDetailContext = createContext<
@@ -40,8 +44,8 @@ export const ProductDetailProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const { id } = useParams();
-  const [selectedColor, setSelectedColor] = useState("Trắng");
-  const [selectedSize, setSelectedSize] = useState("S");
+  const [selectedProperty1, setSelectedProperty1] = useState("Trắng");
+  const [selectedProperty2, setSelectedProperty2] = useState("S");
   const [currentPrice, setCurrentPrice] = useState(199000);
   const [currentStock, setCurrentStock] = useState(100);
   const [quantity, setQuantity] = useState(1);
@@ -50,6 +54,8 @@ export const ProductDetailProvider: React.FC<{ children: ReactNode }> = ({
   const [reviews, setReviews] = useState<Review[]>([]);
   const [isLoadingReviews, setIsLoadingReviews] = useState(false);
   const [product, setProduct] = useState<IProductCreateSchema>(productData);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [openPopupReview, setOpenPopupReview] = useState(false);
 
   const getReviews = async () => {
     try {
@@ -79,16 +85,23 @@ export const ProductDetailProvider: React.FC<{ children: ReactNode }> = ({
     setQuantity((prev) => Math.max(1, Math.min(prev + amount, currentStock)));
   };
 
-  const handleAddToCart = () => {
-    console.log("Product added to cart");
+  const handleAddToCart = async () => {
+    if (!id) return;
+    await ProductDetailService.AddToCart(
+      id,
+      selectedProperty1,
+      selectedProperty2,
+      quantity
+    );
+    setSnackbarOpen(true);
   };
 
-  const handleColorChange = (color: string) => {
-    setSelectedColor(color);
+  const handleProperty1Change = (property1: string) => {
+    setSelectedProperty1(property1);
   };
 
-  const handleSizeChange = (size: string) => {
-    setSelectedSize(size);
+  const handleProperty2Change = (property2: string) => {
+    setSelectedProperty2(property2);
   };
   useEffect(() => {
     getReviews();
@@ -97,13 +110,17 @@ export const ProductDetailProvider: React.FC<{ children: ReactNode }> = ({
   return (
     <ProductDetailContext.Provider
       value={{
+        openPopupReview,
+        setOpenPopupReview,
+        snackbarOpen,
+        setSnackbarOpen,
         getProductDetail,
         getReviews,
         isLoadingReviews,
         reviews,
         product,
-        selectedColor,
-        selectedSize,
+        selectedProperty1,
+        selectedProperty2,
         currentPrice,
         currentStock,
         quantity,
@@ -111,8 +128,8 @@ export const ProductDetailProvider: React.FC<{ children: ReactNode }> = ({
         favorite,
         handleQuantityChange,
         handleAddToCart,
-        handleColorChange,
-        handleSizeChange,
+        handleProperty1Change,
+        handleProperty2Change,
         setFavorite,
       }}
     >

@@ -32,8 +32,8 @@ import { formatPrice } from "../../../../utils/format-price";
 const ProductDetailMainSection: React.FC = () => {
   const {
     product,
-    selectedColor,
-    selectedSize,
+    selectedProperty1,
+    selectedProperty2,
     currentPrice,
     currentStock,
     quantity,
@@ -41,8 +41,8 @@ const ProductDetailMainSection: React.FC = () => {
     favorite,
     handleQuantityChange,
     handleAddToCart,
-    handleColorChange,
-    handleSizeChange,
+    handleProperty1Change,
+    handleProperty2Change,
     setFavorite,
   } = useProductDetail();
   const theme = useTheme();
@@ -63,8 +63,8 @@ const ProductDetailMainSection: React.FC = () => {
   // Tìm giá và tồn kho dựa trên biến thể đã chọn
   const selectedVariant = product.productVariants.find(
     (variant) =>
-      variant.propertyValue1 === selectedColor &&
-      variant.propertyValue2 === selectedSize
+      variant.propertyValue1 === selectedProperty1 &&
+      variant.propertyValue2 === selectedProperty2
   );
   return (
     <>
@@ -84,7 +84,7 @@ const ProductDetailMainSection: React.FC = () => {
               <Box
                 component="img"
                 src={selectedVariant?.image || images[currentImage]}
-                alt={`${product.name} - ${selectedColor} ${selectedSize}`}
+                alt={`${product.name} - ${selectedProperty1} ${selectedProperty2}`}
                 sx={{
                   width: "100%",
                   height: "100%",
@@ -181,7 +181,7 @@ const ProductDetailMainSection: React.FC = () => {
           </Typography>
           <Box sx={{ display: "flex", gap: 1, mb: 3 }}>
             {product.propertyValue1.map((color) => {
-              const isActiveColor = color === selectedColor;
+              const isActiveColor = color === selectedProperty1;
               // Kiểm tra xem màu này có tồn tại biến thể nào không
               const hasVariants = product.productVariants.some(
                 (v) => v.propertyValue1 === color
@@ -190,7 +190,7 @@ const ProductDetailMainSection: React.FC = () => {
               return (
                 <Box
                   key={color}
-                  onClick={() => hasVariants && handleColorChange(color)}
+                  onClick={() => hasVariants && handleProperty1Change(color)}
                   sx={{
                     border: `2px solid ${isActiveColor ? theme.palette.primary.main : "transparent"}`,
                     borderRadius: 1,
@@ -227,15 +227,15 @@ const ProductDetailMainSection: React.FC = () => {
               // Kiểm tra xem có biến thể nào cho màu và kích cỡ này không
               const hasVariant = product.productVariants.some(
                 (v) =>
-                  v.propertyValue1 === selectedColor &&
+                  v.propertyValue1 === selectedProperty1 &&
                   v.propertyValue2 === size
               );
-              const isActiveSize = size === selectedSize;
+              const isActiveSize = size === selectedProperty2;
 
               return (
                 <Box
                   key={size}
-                  onClick={() => hasVariant && handleSizeChange(size)}
+                  onClick={() => hasVariant && handleProperty2Change(size)}
                   sx={{
                     border: `2px solid ${isActiveSize ? theme.palette.primary.main : "transparent"}`,
                     borderRadius: 1,

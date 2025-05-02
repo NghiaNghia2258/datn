@@ -42,62 +42,11 @@ import {
   Save,
   Cancel,
 } from "@mui/icons-material";
+import { useProfile } from "../../../context/U/profile";
+import { UserProfile } from "../../../context/U/profile/response";
+import UserProfileService from "../../../context/U/profile/service";
 
-// Mock data
-const userData = {
-  id: "1234567",
-  name: "Nguyễn Văn A",
-  email: "nguyenvana@example.com",
-  phone: "0987654321",
-  address: "123 Đường Lê Lợi, Quận 1, TP.HCM",
-  birthday: "15/05/1990",
-  avatar: "https://source.unsplash.com/random/?portrait",
-  memberSince: "20/04/2020",
-  rank: "Gold",
-  points: 1450,
-  orders: [
-    {
-      id: "ORD-001",
-      date: "05/04/2025",
-      total: "2,500,000đ",
-      status: "Đã giao hàng",
-    },
-    {
-      id: "ORD-002",
-      date: "20/03/2025",
-      total: "1,800,000đ",
-      status: "Đã giao hàng",
-    },
-    {
-      id: "ORD-003",
-      date: "10/03/2025",
-      total: "3,200,000đ",
-      status: "Đã giao hàng",
-    },
-  ],
-  wishlist: [
-    {
-      id: "P001",
-      name: "iPhone 15 Pro",
-      price: "28,990,000đ",
-      image: "https://source.unsplash.com/random/?iphone",
-    },
-    {
-      id: "P002",
-      name: "MacBook Air M3",
-      price: "32,490,000đ",
-      image: "https://source.unsplash.com/random/?macbook",
-    },
-    {
-      id: "P003",
-      name: "AirPods Pro 2",
-      price: "6,490,000đ",
-      image: "https://source.unsplash.com/random/?airpods",
-    },
-  ],
-};
-
-function TabPanel(props) {
+function TabPanel(props: any) {
   const { children, value, index, ...other } = props;
 
   return (
@@ -113,34 +62,30 @@ function TabPanel(props) {
   );
 }
 
-export default function UserProfile() {
+export default function UserProfilePage() {
+  const { user, orders, wishlist } = useProfile();
   const [tabValue, setTabValue] = useState(0);
   const [editMode, setEditMode] = useState(false);
-  const [editedUserData, setEditedUserData] = useState(userData);
+  const [editedUser, setEditedUserData] = useState<UserProfile>();
   const [openDialog, setOpenDialog] = useState(false);
-
-  const handleTabChange = (_, newValue: any) => {
-    setTabValue(newValue);
-  };
-
   const handleEditToggle = () => {
+    if (!user) return;
     setEditMode(!editMode);
-    setEditedUserData(userData);
+    setEditedUserData(user);
   };
 
-  const handleSaveChanges = () => {
-    // In a real app, you would send the updated data to the server
-    // For now, we'll just toggle out of edit mode
+  const handleSaveChanges = async () => {
+    if (!editedUser) return;
+    await UserProfileService.Update(editedUser);
     setEditMode(false);
-    // Display success message or update userData state
   };
 
   const handleInputChange = (e: any) => {
     const { name, value } = e.target;
     setEditedUserData({
-      ...editedUserData,
+      ...editedUser,
       [name]: value,
-    });
+    } as unknown as UserProfile);
   };
 
   const handleOpenDialog = () => {
@@ -176,27 +121,23 @@ export default function UserProfile() {
               }
             >
               <Avatar
-                src={userData.avatar}
+                src={user.avatar}
                 sx={{ width: 120, height: 120, mx: "auto", mb: 2 }}
               />
             </Badge>
 
             <Typography variant="h5" gutterBottom sx={{ fontWeight: "bold" }}>
-              {userData.name}
+              {user.name}
             </Typography>
 
-            <Chip
-              label={`Hạng ${userData.rank}`}
-              color="primary"
-              sx={{ mb: 2 }}
-            />
+            <Chip label={`Hạng ${user.rank}`} color="primary" sx={{ mb: 2 }} />
 
             <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-              ID Khách hàng: {userData.id}
+              ID Khách hàng: {user.id}
             </Typography>
 
             <Typography variant="body2" color="text.secondary">
-              Thành viên từ: {userData.memberSince}
+              Thành viên từ: {user.memberSince}
             </Typography>
 
             <Box
@@ -212,7 +153,7 @@ export default function UserProfile() {
                 color="primary.main"
                 sx={{ fontWeight: "bold" }}
               >
-                {userData.points}
+                {user.points}
               </Typography>
               <Typography variant="body2" color="text.secondary" sx={{ ml: 1 }}>
                 điểm thưởng
@@ -228,7 +169,7 @@ export default function UserProfile() {
                 </ListItemIcon>
                 <ListItemText
                   primary="Email"
-                  secondary={userData.email}
+                  secondary={user.email}
                   primaryTypographyProps={{
                     variant: "body2",
                     color: "text.secondary",
@@ -243,7 +184,7 @@ export default function UserProfile() {
                 </ListItemIcon>
                 <ListItemText
                   primary="Số điện thoại"
-                  secondary={userData.phone}
+                  secondary={user.phone}
                   primaryTypographyProps={{
                     variant: "body2",
                     color: "text.secondary",
@@ -258,7 +199,7 @@ export default function UserProfile() {
                 </ListItemIcon>
                 <ListItemText
                   primary="Địa chỉ"
-                  secondary={userData.address}
+                  secondary={user.address}
                   primaryTypographyProps={{
                     variant: "body2",
                     color: "text.secondary",
@@ -273,7 +214,7 @@ export default function UserProfile() {
                 </ListItemIcon>
                 <ListItemText
                   primary="Ngày sinh"
-                  secondary={userData.birthday}
+                  secondary={user.birthday}
                   primaryTypographyProps={{
                     variant: "body2",
                     color: "text.secondary",
@@ -302,7 +243,7 @@ export default function UserProfile() {
             <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
               <Tabs
                 value={tabValue}
-                onChange={handleTabChange}
+                onChange={(_, newValue) => setTabValue(newValue)}
                 aria-label="profile tabs"
                 sx={{
                   px: 2,
@@ -347,7 +288,7 @@ export default function UserProfile() {
                         fullWidth
                         label="Họ tên"
                         name="name"
-                        value={editedUserData.name}
+                        value={editedUser?.name}
                         onChange={handleInputChange}
                       />
                     </Grid>
@@ -356,7 +297,7 @@ export default function UserProfile() {
                         fullWidth
                         label="Email"
                         name="email"
-                        value={editedUserData.email}
+                        value={editedUser?.email}
                         onChange={handleInputChange}
                       />
                     </Grid>
@@ -365,7 +306,7 @@ export default function UserProfile() {
                         fullWidth
                         label="Số điện thoại"
                         name="phone"
-                        value={editedUserData.phone}
+                        value={editedUser?.phone}
                         onChange={handleInputChange}
                       />
                     </Grid>
@@ -374,7 +315,7 @@ export default function UserProfile() {
                         fullWidth
                         label="Ngày sinh"
                         name="birthday"
-                        value={editedUserData.birthday}
+                        value={editedUser?.birthday}
                         onChange={handleInputChange}
                       />
                     </Grid>
@@ -383,7 +324,7 @@ export default function UserProfile() {
                         fullWidth
                         label="Địa chỉ"
                         name="address"
-                        value={editedUserData.address}
+                        value={editedUser?.address}
                         onChange={handleInputChange}
                         multiline
                         rows={2}
@@ -451,9 +392,7 @@ export default function UserProfile() {
                             </Typography>
                           </Grid>
                           <Grid item xs={8}>
-                            <Typography variant="body1">
-                              {userData.id}
-                            </Typography>
+                            <Typography variant="body1">{user.id}</Typography>
                           </Grid>
 
                           <Grid item xs={4}>
@@ -462,9 +401,7 @@ export default function UserProfile() {
                             </Typography>
                           </Grid>
                           <Grid item xs={8}>
-                            <Typography variant="body1">
-                              {userData.rank}
-                            </Typography>
+                            <Typography variant="body1">{user.rank}</Typography>
                           </Grid>
 
                           <Grid item xs={4}>
@@ -474,7 +411,7 @@ export default function UserProfile() {
                           </Grid>
                           <Grid item xs={8}>
                             <Typography variant="body1">
-                              {userData.points} điểm
+                              {user.points} điểm
                             </Typography>
                           </Grid>
 
@@ -485,7 +422,7 @@ export default function UserProfile() {
                           </Grid>
                           <Grid item xs={8}>
                             <Typography variant="body1">
-                              {userData.memberSince}
+                              {user.memberSince}
                             </Typography>
                           </Grid>
                         </Grid>
@@ -513,7 +450,7 @@ export default function UserProfile() {
                               }}
                             >
                               <Typography variant="h4" color="primary.main">
-                                {userData.orders.length}
+                                {orders.length}
                               </Typography>
                               <Typography variant="body2">Đơn hàng</Typography>
                             </Paper>
@@ -530,7 +467,7 @@ export default function UserProfile() {
                               }}
                             >
                               <Typography variant="h4" color="error.main">
-                                {userData.wishlist.length}
+                                {wishlist.length}
                               </Typography>
                               <Typography variant="body2">
                                 Sản phẩm yêu thích
@@ -574,7 +511,7 @@ export default function UserProfile() {
 
               <Divider sx={{ my: 3 }} />
 
-              {userData.orders.map((order) => (
+              {orders.map((order) => (
                 <Paper
                   key={order.id}
                   variant="outlined"
@@ -640,7 +577,7 @@ export default function UserProfile() {
               <Divider sx={{ my: 3 }} />
 
               <Grid container spacing={3}>
-                {userData.wishlist.map((product) => (
+                {wishlist.map((product) => (
                   <Grid item xs={12} sm={6} md={4} key={product.id}>
                     <Card
                       sx={{
@@ -880,7 +817,7 @@ export default function UserProfile() {
         <DialogContent>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 3, pt: 1 }}>
             <Avatar
-              src={userData.avatar}
+              src={user.avatar}
               sx={{ width: 120, height: 120, mx: "auto" }}
             />
 

@@ -13,6 +13,7 @@ import { Variant } from "./variant";
 import ProductService from "../../../services/product.service";
 import { useToast } from "../../../context/toast";
 import { useCreateUpdateProduct } from "../../../context/A/create-product";
+import { SpecifiAttribute } from "./specifi-attribute";
 
 const FeatCreateProduct: FC = () => {
   const { showToast } = useToast();
@@ -42,6 +43,7 @@ const FeatCreateProduct: FC = () => {
       removedUrls: [],
       existingUrls: [],
       fileUpload: null,
+      specifications: [],
     });
   }, []);
   useEffect(() => {
@@ -70,6 +72,7 @@ const FeatCreateProduct: FC = () => {
           <ProductBasicInfo />
           <ProductPriceInfoForm />
           <Variant />
+          <SpecifiAttribute />
         </Box>
         <Box sx={{ flex: 1, display: "flex", flexDirection: "column", gap: 2 }}>
           <CommonCart title="Hình ảnh">

@@ -18,6 +18,7 @@ import Cart from "../pages/U/cart";
 import Payment from "../pages/U/payment";
 import Profile from "../pages/U/profile";
 import StoreProducts from "../pages/U/store-product";
+import SearchProduct from "../pages/U/search-product";
 
 export const DASHBOARD_URLS = {
   EMPLOYEE: {
@@ -49,6 +50,7 @@ export const USER_URLS = {
   PAYMENT: "payment",
   PROFILE: "profile",
   STORE_PRODUCTS: "store-products",
+  SEARCH_PRODUCTS: "search-products",
 };
 
 const dashboardRoutes = [
@@ -98,6 +100,10 @@ const userRoutes = [
   {
     path: `${USER_URLS.STORE_PRODUCTS}/:storeId`,
     element: <StoreProducts />,
+  },
+  {
+    path: `${USER_URLS.SEARCH_PRODUCTS}/:searchKey`,
+    element: <SearchProduct />,
   },
 ];
 const AppRoutes = () => (
