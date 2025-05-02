@@ -15,6 +15,7 @@ export const VariantCreateSchema = z.object({
 export const ProductCreateSchema = z.object({
   name: z.string().min(1, { message: "Tên không được để trống" }),
   categoryId: z.string().optional(),
+  brandId: z.string().optional(),
   price: z.number().min(0, { message: "Giá tiền phải lớn hơn hoặc = 0" }),
   tax: z.number().min(0).max(100).optional(),
   description: z.string().optional(),

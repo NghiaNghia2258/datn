@@ -111,7 +111,7 @@ const NavItem: React.FC<NavbarItemModel> = ({
           <Box
             key={index}
             onClick={() => {
-              navigate(`${path}/${option.path}`);
+              navigate(`dashboard/${path}/${option.path}`);
             }}
             sx={{
               padding: "8px 10px",

@@ -19,7 +19,7 @@ export const DEFAULT_ROUTE: NavbarItemModel[] = [
     children: [
       {
         title: "Danh sách sản phẩm",
-        path: "/",
+        path: "",
       },
       {
         title: "Thêm sản phẩm",
@@ -49,7 +49,7 @@ export const DEFAULT_ROUTE: NavbarItemModel[] = [
       },
       {
         title: "Thêm nhân viên",
-        path: "/add",
+        path: "add",
       },
     ],
   },
@@ -76,6 +76,33 @@ export const DEFAULT_ROUTE: NavbarItemModel[] = [
       {
         title: "Tạo phiếu nhập",
         path: "add",
+      },
+    ],
+  },
+  {
+    title: "Giảm giá",
+    path: "discounts",
+    icon: Groups,
+    children: [
+      {
+        title: "Danh sách chiến dịch",
+        path: "/",
+      },
+      {
+        title: "Danh sách voucher",
+        path: "/vouchers",
+      },
+      {
+        title: "Tạo voucher",
+        path: "add",
+      },
+      {
+        title: "Tạo bundle",
+        path: "add/bundle",
+      },
+      {
+        title: "Tạo volume",
+        path: "add/voulme",
       },
     ],
   },

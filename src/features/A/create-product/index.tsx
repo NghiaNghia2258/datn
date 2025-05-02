@@ -14,6 +14,7 @@ import ProductService from "../../../services/product.service";
 import { useToast } from "../../../context/toast";
 import { useCreateUpdateProduct } from "../../../context/A/create-product";
 import { SpecifiAttribute } from "./specifi-attribute";
+import { ProductBrandForm } from "./brand";
 
 const FeatCreateProduct: FC = () => {
   const { showToast } = useToast();
@@ -85,6 +86,7 @@ const FeatCreateProduct: FC = () => {
             />
           </CommonCart>
           <Shipping />
+          <ProductBrandForm />
           <CommonButton
             title={productId ? "Lưu" : "Tạo mới"}
             vartiant="primary"

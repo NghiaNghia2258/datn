@@ -186,7 +186,7 @@ export default class ProductService{
         pendingOrderQuantity: 15
       };
     }
- static async  getInboundSelectableProducts (): Promise<InboundProduct[]> {
+    static async  getInboundSelectableProducts (): Promise<InboundProduct[]> {
   await delay(1000); // Giả lập loading
 
   const rawProducts: ResponseGetAllProducts[] = [
@@ -246,6 +246,13 @@ export default class ProductService{
   );
 
   return result;
-};
-
+    };
+    static async createBrand(brandName: string){
+      await delay(1000);
+      console.log(brandName);
+    }
+    static async createCategory(CategoryName: string){
+      await delay(1000);
+      console.log(CategoryName);
+    }
 }
