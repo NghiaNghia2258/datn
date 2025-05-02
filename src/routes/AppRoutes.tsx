@@ -19,6 +19,7 @@ import Payment from "../pages/U/payment";
 import Profile from "../pages/U/profile";
 import StoreProducts from "../pages/U/store-product";
 import SearchProduct from "../pages/U/search-product";
+import ViewCampaingn from "../pages/A/campaingn";
 
 export const DASHBOARD_URLS = {
   EMPLOYEE: {
@@ -36,6 +37,16 @@ export const DASHBOARD_URLS = {
     CREATE: "dashboard/inbound/add",
     VIEW: "dashboard/inbounds",
     UPDATE: (id: string) => `dashboard/inbounds/update/${id}`,
+  },
+  DISCOUNT: {
+    CREATE_BUNDLE: "dashboard/discounts/add-bundle",
+    CREATE_VOLUME: "dashboard/discounts/add-volume",
+    UPDATE_BUNDLE: (id: string) => `dashboard/discounts/update/bundle/${id}`,
+    UPDATE_VOLUME: (id: string) => `dashboard/discounts/update/volume/${id}`,
+    CREATE_VOUCHER: "dashboard/discounts/add-voucher",
+    UPDATE_VOUCHER: (id: string) => `dashboard/discounts/update/voucher/${id}`,
+    VIEW_CAMPAINGN: "dashboard/discounts",
+    VIEW_VOUCHER: "dashboard/discounts/vouchers",
   },
 };
 
@@ -65,6 +76,7 @@ const dashboardRoutes = [
   { path: DASHBOARD_URLS.PRODUCT.VIEW, element: <ViewProduct /> },
   { path: DASHBOARD_URLS.PRODUCT.ADD, element: <CreateProduct /> },
   { path: DASHBOARD_URLS.INBOUND.VIEW, element: <ViewInboundReceipt /> },
+  { path: DASHBOARD_URLS.DISCOUNT.VIEW_CAMPAINGN, element: <ViewCampaingn /> },
   { path: "dashboard/products/update/:productId", element: <CreateProduct /> },
   {
     path: "dashboard/inbounds/update/:receiptId",
