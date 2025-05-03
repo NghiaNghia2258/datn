@@ -90,7 +90,7 @@ export const DEFAULT_ROUTE: NavbarItemModel[] = [
       },
       {
         title: "Danh sách voucher",
-        path: "/vouchers",
+        path: "vouchers",
       },
       {
         title: "Tạo voucher",

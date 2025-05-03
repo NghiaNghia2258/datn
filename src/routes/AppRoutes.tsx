@@ -20,6 +20,7 @@ import Profile from "../pages/U/profile";
 import StoreProducts from "../pages/U/store-product";
 import SearchProduct from "../pages/U/search-product";
 import ViewCampaingn from "../pages/A/campaingn";
+import ViewVoucher from "../pages/A/view-vouchers";
 
 export const DASHBOARD_URLS = {
   EMPLOYEE: {
@@ -77,6 +78,7 @@ const dashboardRoutes = [
   { path: DASHBOARD_URLS.PRODUCT.ADD, element: <CreateProduct /> },
   { path: DASHBOARD_URLS.INBOUND.VIEW, element: <ViewInboundReceipt /> },
   { path: DASHBOARD_URLS.DISCOUNT.VIEW_CAMPAINGN, element: <ViewCampaingn /> },
+  { path: DASHBOARD_URLS.DISCOUNT.VIEW_VOUCHER, element: <ViewVoucher /> },
   { path: "dashboard/products/update/:productId", element: <CreateProduct /> },
   {
     path: "dashboard/inbounds/update/:receiptId",
