@@ -21,6 +21,11 @@ import StoreProducts from "../pages/U/store-product";
 import SearchProduct from "../pages/U/search-product";
 import ViewCampaingn from "../pages/A/campaingn";
 import ViewVoucher from "../pages/A/view-vouchers";
+import CreateBandle from "../pages/A/create-bundle";
+import CreateVolume from "../pages/A/create-volume";
+import CreateVoucher from "../pages/A/create-voucher";
+import ViewOrders from "../pages/A/view-orders";
+import OrderDetail from "../pages/A/order-detail";
 
 export const DASHBOARD_URLS = {
   EMPLOYEE: {
@@ -30,6 +35,10 @@ export const DASHBOARD_URLS = {
     VIEW: "dashboard/products",
     ADD: "dashboard/products/add",
     UPDATE: (id: string) => `dashboard/products/update/${id}`,
+  },
+  ORDER: {
+    VIEW: "dashboard/orders",
+    UPDATE: (id: string) => `dashboard/orders/update/${id}`,
   },
   CUSTOMER: {
     VIEW: "dashboard/customers",
@@ -79,6 +88,23 @@ const dashboardRoutes = [
   { path: DASHBOARD_URLS.INBOUND.VIEW, element: <ViewInboundReceipt /> },
   { path: DASHBOARD_URLS.DISCOUNT.VIEW_CAMPAINGN, element: <ViewCampaingn /> },
   { path: DASHBOARD_URLS.DISCOUNT.VIEW_VOUCHER, element: <ViewVoucher /> },
+  { path: DASHBOARD_URLS.DISCOUNT.CREATE_BUNDLE, element: <CreateBandle /> },
+  { path: DASHBOARD_URLS.DISCOUNT.CREATE_VOLUME, element: <CreateVolume /> },
+  { path: DASHBOARD_URLS.DISCOUNT.CREATE_VOUCHER, element: <CreateVoucher /> },
+  {
+    path: DASHBOARD_URLS.DISCOUNT.UPDATE_BUNDLE(":bundleId"),
+    element: <CreateBandle />,
+  },
+  {
+    path: DASHBOARD_URLS.DISCOUNT.UPDATE_VOLUME(":volumeId"),
+    element: <CreateVolume />,
+  },
+  {
+    path: DASHBOARD_URLS.DISCOUNT.UPDATE_VOUCHER(":voucherId"),
+    element: <CreateVoucher />,
+  },
+  { path: DASHBOARD_URLS.ORDER.VIEW, element: <ViewOrders /> },
+  { path: DASHBOARD_URLS.ORDER.UPDATE(":orderId"), element: <OrderDetail /> },
   { path: "dashboard/products/update/:productId", element: <CreateProduct /> },
   {
     path: "dashboard/inbounds/update/:receiptId",
