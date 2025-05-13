@@ -7,17 +7,34 @@ import {
   Box,
   styled,
   InputBase,
+  alpha,
 } from "@mui/material";
 import {
-  Search as SearchIcon,
   ShoppingCart as ShoppingCartIcon,
   Person as PersonIcon,
   Menu as MenuIcon,
   Notifications as NotificationsIcon,
   Favorite as FavoriteIcon,
-  Search,
+  Search as SearchIcon,
 } from "@mui/icons-material";
 import { useState } from "react";
+
+// Tạo container cho thanh tìm kiếm
+const Search = styled("div")(({ theme }) => ({
+  position: "relative",
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  "&:hover": {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  marginRight: theme.spacing(2),
+  marginLeft: 0,
+  width: "100%",
+  [theme.breakpoints.up("sm")]: {
+    marginLeft: theme.spacing(3),
+    width: "auto",
+  },
+}));
 
 const SearchIconWrapper = styled("div")(({ theme }) => ({
   padding: theme.spacing(0, 2),
@@ -28,8 +45,10 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
   alignItems: "center",
   justifyContent: "center",
 }));
+
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
+  width: "100%",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
@@ -40,6 +59,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
   },
 }));
+
 const Header = () => {
   const [searchText, setSearchText] = useState("");
 

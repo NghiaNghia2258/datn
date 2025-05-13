@@ -14,7 +14,7 @@ export default class ProductService{
             {
               id:"p1",
                 name: "Áo thun nam",
-                mainImageUrl: "https://example.com/images/ao-thun.jpg",
+                mainImageUrl: "https://placehold.co/100x100",
                 totalInventory: 150,
                 categoryName: "Thời trang nam",
                 rate: 4.5,
@@ -25,19 +25,19 @@ export default class ProductService{
                   {
                     propertyValue1: "Đen",
                     propertyValue2: "L",
-                    imageUrl: "https://example.com/images/ao-thun-den-L.jpg",
+                    imageUrl: "https://placehold.co/100x100",
                     inventory: 50
                   },
                   {
                     propertyValue1: "Trắng",
                     propertyValue2: "M",
-                    imageUrl: "https://example.com/images/ao-thun-trang-M.jpg",
+                    imageUrl: "https://placehold.co/100x100",
                     inventory: 30
                   },
                   {
                     propertyValue1: "Xanh",
                     propertyValue2: "XL",
-                    imageUrl: "https://example.com/images/ao-thun-xanh-XL.jpg",
+                    imageUrl: "https://placehold.co/100x100",
                     inventory: 70
                   }
                 ]
@@ -45,7 +45,7 @@ export default class ProductService{
               {
               id:"p2",
                 name: "Balo du lịch",
-                mainImageUrl: "https://example.com/images/balo.jpg",
+                mainImageUrl: "https://placehold.co/100x100",
                 totalInventory: 80,
                 categoryName: "Phụ kiện",
                 rate: 4.7,
@@ -97,7 +97,8 @@ export default class ProductService{
             price: 250000,
             stock: 50,
             isActivate: false,
-            image: null
+            image: "https://placehold.co/100x100"
+
           },
           {
             propertyValue1: "Trắng", 
@@ -105,7 +106,8 @@ export default class ProductService{
             price: 250000,
             stock: 45,
             isActivate: true,
-            image: null
+            image: "https://placehold.co/100x100"
+
           },
           {
             propertyValue1: "Đen",
@@ -113,7 +115,7 @@ export default class ProductService{
             price: 270000,
             stock: 30,
             isActivate: false,
-            image: null
+            image: "https://placehold.co/100x100"
           },
           {
             propertyValue1: "Đen",
@@ -121,13 +123,13 @@ export default class ProductService{
             price: 270000,
             stock: 25,
             isActivate: true,
-            image: "https://th.bing.com/th/id/OIP.CYkVrrAB4OlRYovO26ZwMwHaHa?w=189&h=189&c=7&r=0&o=5&dpr=1.3&pid=1.7"
+            image: "https://placehold.co/100x100"
           }
         ],
         removedUrls: ["https://example.com/img/old-product-1.jpg"],
         existingUrls: [
-          "https://example.com/img/product-front.jpg",
-          "https://example.com/img/product-back.jpg"
+          "https://placehold.co/100x100",
+          "https://placehold.co/100x100"
         ],
         fileUpload: null,
         specifications: [
@@ -193,7 +195,7 @@ export default class ProductService{
     {
       id: "p1",
       name: "Áo thun nam",
-      mainImageUrl: "https://example.com/images/ao-thun.jpg",
+      mainImageUrl: "https://placehold.co/100x100",
       totalInventory: 150,
       categoryName: "Thời trang nam",
       rate: 4.5,
@@ -204,19 +206,19 @@ export default class ProductService{
         {
           propertyValue1: "Đen",
           propertyValue2: "L",
-          imageUrl: "https://example.com/images/ao-thun-den-L.jpg",
+          imageUrl: "https://placehold.co/100x100",
           inventory: 50
         },
         {
           propertyValue1: "Trắng",
           propertyValue2: "M",
-          imageUrl: "https://example.com/images/ao-thun-trang-M.jpg",
+          imageUrl: "https://placehold.co/100x100",
           inventory: 30
         },
         {
           propertyValue1: "Xanh",
           propertyValue2: "XL",
-          imageUrl: "https://example.com/images/ao-thun-xanh-XL.jpg",
+          imageUrl: "https://placehold.co/100x100",
           inventory: 70
         }
       ]
@@ -224,7 +226,7 @@ export default class ProductService{
     {
       id: "p2",
       name: "Balo du lịch",
-      mainImageUrl: "https://example.com/images/balo.jpg",
+      mainImageUrl: "https://placehold.co/100x100",
       totalInventory: 80,
       categoryName: "Phụ kiện",
       rate: 4.7,

@@ -52,8 +52,7 @@ export default class InboundReceiptService {
     await delay(1000);
 
     return {
-      createdAt: "2024-04-01",
-      createdBy: "admin",
+      stockInDate: "2024-04-01",
       supplierId: "1",
       note: "Chi tiết phiếu nhập kho",
       items: [

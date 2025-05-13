@@ -10,7 +10,7 @@ export const InboundBasicInfoForm = () => {
       <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
         <Box sx={{ flex: 1 }}>
           <CommonTextField<IInboundReceiptCreateSchema>
-            name="createdAt"
+            name="stockInDate"
             label="Ngày nhập kho"
             type="date"
           />

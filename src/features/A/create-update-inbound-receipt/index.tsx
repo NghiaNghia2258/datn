@@ -25,8 +25,7 @@ const FeatCreateInboundReceipt: FC = () => {
   useEffect(() => {
     setSchema(InboundReceiptCreateSchema);
     setFormData({
-      createdAt: new Date().toISOString(),
-      createdBy: "admin", // Có thể thay bằng user hiện tại
+      stockInDate: new Date().toISOString(),
       supplierId: undefined,
       note: "",
       items: [],

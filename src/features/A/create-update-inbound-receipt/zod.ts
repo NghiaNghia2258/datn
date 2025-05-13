@@ -11,8 +11,7 @@ export const InboundItemSchema = z.object({
 });
 
 export const InboundReceiptCreateSchema = z.object({
-  createdAt: z.string(),              // ISO datetime string
-  createdBy: z.string().optional(),                  // ID hoặc username
+  stockInDate: z.string(),              // ISO datetime string
   supplierId: z.string().optional(),             // Optional
   note: z.string().optional(),
   items: z.array(InboundItemSchema).min(1, 'Phải có ít nhất 1 sản phẩm'),
