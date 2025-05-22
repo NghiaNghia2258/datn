@@ -175,26 +175,6 @@ function ViewModeList() {
                     </Typography>
                   )}
                 </Box>
-
-                <Box sx={{ display: "flex", mt: "auto", pt: 2 }}>
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    sx={{ mr: 1 }}
-                  >
-                    Phiên bản:
-                  </Typography>
-                  {product.variants.map((variant, index) => (
-                    <Chip
-                      key={index}
-                      label={variant}
-                      size="small"
-                      sx={{ mr: 0.5 }}
-                      variant="outlined"
-                    />
-                  ))}
-                </Box>
-
                 <Box
                   sx={{
                     display: "flex",

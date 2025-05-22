@@ -85,7 +85,7 @@ const FeatViewInboundReceipts = () => {
             await handleSearch(e);
           }}
           onEditRow={(row) => {
-            navigate(`/inbound-receipts/${row.receiptId}/edit`);
+            navigate(DASHBOARD_URLS.INBOUND.UPDATE(row.receiptId));
           }}
           onDeleteRow={async (row) => {
             await InboundReceiptService.delete(row.receiptId);

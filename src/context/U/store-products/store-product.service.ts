@@ -83,7 +83,6 @@ export default class StoreProductService {
           brand: "Apple",
           shortDescription:
             "iPhone 15 Pro Max 256GB - Chip A17 Pro, Camera 48MP, Pin siêu trâu",
-          variants: ["Đen", "Trắng", "Xanh", "Titan"],
         },
         {
           id: "P002",
@@ -101,7 +100,6 @@ export default class StoreProductService {
           brand: "Samsung",
           shortDescription:
             "Galaxy S24 Ultra - Snapdragon 8 Gen 3, Camera 200MP, S-Pen",
-          variants: ["Đen", "Trắng", "Xanh", "Tím"],
         },
         {
           id: "P003",
@@ -119,7 +117,6 @@ export default class StoreProductService {
           brand: "Apple",
           shortDescription:
             "MacBook Air M3 - Hiệu năng mạnh mẽ, siêu mỏng nhẹ, Pin 18h",
-          variants: ["Space Gray", "Silver", "Starlight", "Midnight"],
         },
         {
           id: "P004",
@@ -137,7 +134,6 @@ export default class StoreProductService {
           brand: "Apple",
           shortDescription:
             "iPad Air 6 256GB - Chip M2, màn hình Liquid Retina 10.9 inch",
-          variants: ["Space Gray", "Silver", "Blue", "Pink"],
         },
         {
           id: "P005",
@@ -154,7 +150,6 @@ export default class StoreProductService {
           category: "Tai nghe",
           brand: "Apple",
           shortDescription: "AirPods Pro 2 - Chống ồn chủ động, Chất âm đỉnh cao",
-          variants: ["Trắng"],
         },
         {
           id: "P006",
@@ -171,7 +166,6 @@ export default class StoreProductService {
           category: "Laptop",
           brand: "Dell",
           shortDescription: "Dell XPS 13 - Intel Core Ultra 7, 16GB RAM, 512GB SSD",
-          variants: ["Bạc", "Đen"],
         },
         {
           id: "P007",
@@ -189,7 +183,6 @@ export default class StoreProductService {
           brand: "Samsung",
           shortDescription:
             'Galaxy Tab S9 Ultra - Màn hình 14.6", Snapdragon 8 Gen 2',
-          variants: ["Đen", "Bạc"],
         },
         {
           id: "P008",
@@ -206,7 +199,6 @@ export default class StoreProductService {
           category: "Tai nghe",
           brand: "Sony",
           shortDescription: "Sony WH-1000XM5 - Chống ồn hàng đầu, Chất âm xuất sắc",
-          variants: ["Đen", "Bạc"],
         },
       ],
       totalRecordsCount: 30,

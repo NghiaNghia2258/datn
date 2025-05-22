@@ -44,7 +44,7 @@ export const DASHBOARD_URLS = {
     VIEW: "dashboard/customers",
   },
   INBOUND: {
-    CREATE: "dashboard/inbound/add",
+    CREATE: "dashboard/inbounds/add",
     VIEW: "dashboard/inbounds",
     UPDATE: (id: string) => `dashboard/inbounds/update/${id}`,
   },

@@ -240,7 +240,7 @@ export default class ProductService{
   // Convert productVariants → InboundSelectedProduct[]
   const result: InboundProduct[] = rawProducts.flatMap((product) =>
     product.productVariants.map((variant) => ({
-      id: `${product.id}_${variant.propertyValue1}_${variant.propertyValue2}`,
+      id: `${variant}`,
       name: `${product.name} - ${variant.propertyValue1} - ${variant.propertyValue2}`,
       inventory: variant.inventory,
       image: variant.imageUrl
