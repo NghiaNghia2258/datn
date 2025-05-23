@@ -2,60 +2,17 @@ import { IProductCreateSchema } from "../features/A/create-product/zod";
 import { InboundProduct } from "../features/A/create-update-inbound-receipt/zod";
 import {  RequestGetALlProducts } from "./request/product.request";
 import { ProductInventoryInfo, ProductStatus, ResponseGetAllProducts, ResponseStatisticsOneProduct } from "./response/product.response";
+import * as axios from './axios-instance';
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
      
 export default class ProductService{
 
     static async getAll(options?:RequestGetALlProducts): Promise<ResponseGetAllProducts[]>{
-        console.log("getAll", options);
-        await delay(2000);
-        const res: ResponseGetAllProducts[] = [
-            {
-              id:"p1",
-                name: "Áo thun nam",
-                mainImageUrl: "https://placehold.co/100x100",
-                totalInventory: 150,
-                categoryName: "Thời trang nam",
-                rate: 4.5,
-                rateCount: 120,
-                propertyName1: "Màu sắc",
-                propertyName2: "Kích thước",
-                productVariants: [
-                  {
-                    propertyValue1: "Đen",
-                    propertyValue2: "L",
-                    imageUrl: "https://placehold.co/100x100",
-                    inventory: 50
-                  },
-                  {
-                    propertyValue1: "Trắng",
-                    propertyValue2: "M",
-                    imageUrl: "https://placehold.co/100x100",
-                    inventory: 30
-                  },
-                  {
-                    propertyValue1: "Xanh",
-                    propertyValue2: "XL",
-                    imageUrl: "https://placehold.co/100x100",
-                    inventory: 70
-                  }
-                ]
-              },
-              {
-              id:"p2",
-                name: "Balo du lịch",
-                mainImageUrl: "https://placehold.co/100x100",
-                totalInventory: 80,
-                categoryName: "Phụ kiện",
-                rate: 4.7,
-                rateCount: 200,
-                propertyName1: "Màu sắc",
-                propertyName2: "Kích thước",
-                productVariants: [] 
-              }
-          ];
-          return res;
+        const response = await axios.GET(`product`, {
+          params: options,
+        });
+          return response;
     }
     static async delete(id:string): Promise<void> {
         console.log("Delete : ", id);

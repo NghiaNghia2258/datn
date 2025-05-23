@@ -51,8 +51,8 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({
     setLoading(true);
     try {
       const response = await ProductService.getAll(option);
-      setProductIdViewStatistics(response[0].id);
-      setProducts(response);
+      setProductIdViewStatistics((response.data ?? [])[0].id);
+      setProducts(response.data ?? []);
     } catch (error) {
       console.error(error);
     } finally {
