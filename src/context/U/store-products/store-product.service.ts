@@ -205,6 +205,7 @@ export default class StoreProductService {
       message: "Get success",
       statusCode: 200
     };
+    
     return res;
   }
 }

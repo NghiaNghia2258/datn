@@ -36,7 +36,7 @@ export interface Product {
     images: string[];
     price: number;
     originalPrice: number;
-    discount: number; // phần trăm giảm giá
+    discount: number; 
     rating: number;
     reviewCount: number;
     inStock: boolean;
