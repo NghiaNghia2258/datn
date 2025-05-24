@@ -18,7 +18,7 @@ export default class UploadService{
                }
          });
 
-         return response.data.data;
+         return `https://localhost:7061/images/${response.data.data}`;
       } catch (error: any) {
          console.error('Upload error:', error);
          throw new Error(error?.response?.data?.message || 'Lỗi khi upload file');
