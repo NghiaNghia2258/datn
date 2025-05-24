@@ -45,6 +45,8 @@ const CommonImageUploader: React.FC<CommonImageUploaderProps> = ({
         isExisting: true,
       }));
       setImageItems(items);
+    } else {
+      setImageItems([]);
     }
   }, [initialImages]);
 

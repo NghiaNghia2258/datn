@@ -3,6 +3,7 @@ import { InboundProduct } from "../features/A/create-update-inbound-receipt/zod"
 import {  RequestGetALlProducts } from "./request/product.request";
 import { ProductInventoryInfo, ProductStatus, ResponseGetAllProducts, ResponseStatisticsOneProduct } from "./response/product.response";
 import * as axios from './axios-instance';
+import UploadService from "./upload.service";
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
      
@@ -10,128 +11,72 @@ export default class ProductService{
 
     static async getAll(options?:RequestGetALlProducts): Promise<ResponseGetAllProducts[]>{
         const response = await axios.GET(`product`, {
-          params: options,
+          params: {
+            ...options,
+            pageIndex : (options?.pageIndex ?? 0) + 1
+          },
         });
           return response;
     }
     static async delete(id:string): Promise<void> {
-        console.log("Delete : ", id);
-        await delay(2000);
+      const response = await axios.DELETE(`product/${id}`);
+      return response.data;
     }   
     static async create(model:IProductCreateSchema): Promise<void> {
-        console.log("Create : ", model);
-        await delay(2000);
+      const urls =  model.fileUpload.map(async (file:any) => {
+        const url = await UploadService.upload(file);
+        return `https://localhost:7061/images/${url}`;
+      });
+      model.existingUrls = await Promise.all(urls);
+      const variants =  model.productVariants.map(async (variant) => {
+        const url = await UploadService.upload(variant.image);
+        return {
+          ...variant,
+          image: `https://localhost:7061/images/${url}`
+        }
+      })
+      model.productVariants = await Promise.all(variants);
+      const res = await axios.POST("product", model);
+      return res.data;
     }
     
     static async update(model:IProductCreateSchema): Promise<void> {
-        console.log("Update : ", model);
-        await delay(2000);
+      const urls =  await Promise.all(model.fileUpload.map(async (file:any) => {
+        const url = await UploadService.upload(file);
+        return `https://localhost:7061/images/${url}`;
+      }));
+      model.existingUrls = [...model.existingUrls,...urls];
+      const variants =  model.productVariants.map(async (variant) => {
+        const url = await UploadService.upload(variant.image);
+        return {
+          ...variant,
+          image: `https://localhost:7061/images/${url}`
+        }
+      })
+      model.productVariants = await Promise.all(variants);
+      const res = await axios.PUT("product", model);
+      return res.data;
     }
     static async GetOne(id:string): Promise<IProductCreateSchema>{
-      console.log("Get one id : " , id);
-      await delay(2000);
-      const productCreateObject:IProductCreateSchema = {
-        name: "Áo thun nam cổ tròn 222",
-        categoryId: "cat123",
-        price: 250000,
-        tax: 8,
-        description: "Áo thun nam cổ tròn chất liệu cotton 100%, thoáng mát, thấm hút mồ hôi tốt",
-        isIncludeTax: false,
-        isPhysicalProduct: true,
-        weight: 0.25,
-        cost: 150000,
-        profit: 100000,
-        margin: 40,
-        unitWeight: "kg",
-        propertyName1: "Màu sắc",
-        propertyName2: "Kích cỡ",
-        propertyValue1: ["Trắng", "Đen"],
-        propertyValue2: ["S", "M", "L"],
-        productVariants: [
-          {
-            propertyValue1: "Trắng",
-            propertyValue2: "XL",
-            price: 250000,
-            stock: 50,
-            isActivate: false,
-            image: "https://placehold.co/100x100"
-
-          },
-          {
-            propertyValue1: "Trắng", 
-            propertyValue2: "M",
-            price: 250000,
-            stock: 45,
-            isActivate: true,
-            image: "https://placehold.co/100x100"
-
-          },
-          {
-            propertyValue1: "Đen",
-            propertyValue2: "M",
-            price: 270000,
-            stock: 30,
-            isActivate: false,
-            image: "https://placehold.co/100x100"
-          },
-          {
-            propertyValue1: "Đen",
-            propertyValue2: "S",
-            price: 270000,
-            stock: 25,
-            isActivate: true,
-            image: "https://placehold.co/100x100"
-          }
-        ],
-        removedUrls: ["https://example.com/img/old-product-1.jpg"],
-        existingUrls: [
-          "https://placehold.co/100x100",
-          "https://placehold.co/100x100"
-        ],
-        fileUpload: null,
-        specifications: [
-          {
-            attributeName: "Thương hiệu",
-            attributeValue: "TECHSHOP",
-          },
-          {
-            attributeName: "Chất liệu",
-            attributeValue: "Cotton 100%",
-          },
-          {
-            attributeName: "Kiểu dáng",
-            attributeValue: "Áo thun cổ tròn, form regular fit",
-          },
-          {
-            attributeName: "Xuất xứ",
-            attributeValue: "Việt Nam",
-          },
-          {
-            attributeName: "Trọng lượng",
-            attributeValue: "250g",
-          },
-          {
-            attributeName: "Hướng dẫn bảo quản",
-            attributeValue:
-              "Giặt máy ở nhiệt độ thường, không sử dụng chất tẩy, phơi trong bóng râm",
-          },
-        ],
-      };
-      return productCreateObject
+      const response = await axios.GET(`product/${id}`);
+      return response.data;
     }
     static async GetProductStatistics(id: string): Promise<ResponseStatisticsOneProduct> {
-      console.log("Get product statistics for id: ", id);
-      
+      const response = await axios.GET(`product/get-statistics/${id}`);
+      const data = response.data;
+
+      const totalScore =
+        1 * data.ratingOneStar +
+        2 * data.ratingTwoStar +
+        3 * data.ratingThreeStar +
+        4 * data.ratingFourStar +
+        5 * data.ratingFiveStar;
+    
+      const averageRate = data.rateCount > 0 ? totalScore / data.rateCount : 0;
+    
       return {
-        productId: "aa",
-        rate: 2.1,
-        rateCount: 128,
-        sellCount: 352,
-        ratingOneStar: 5,
-        ratingTwoStar: 8,
-        ratingThreeStar: 17,
-        ratingFourStar: 48,
-        ratingFiveStar: 50
+        ...data,
+        rate: averageRate
       };
     }
     static async GetProductInventoryInfo(id: string): Promise<ProductInventoryInfo> {
@@ -211,7 +156,16 @@ export default class ProductService{
       console.log(brandName);
     }
     static async createCategory(CategoryName: string){
-      await delay(1000);
-      console.log(CategoryName);
+      const res = await axios.POST("productCategory", {name:CategoryName});
+        return res.data;
+    }
+    static async getAllCategory(){
+      const response = await axios.GET(`productCategory`, {
+        params: {
+          pageSize: 50,
+          pageIndex : 1
+        },
+      });
+        return response.data;
     }
 }

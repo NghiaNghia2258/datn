@@ -6,7 +6,7 @@ import { DynamicInputArray } from "../../../../components/common/text-field/list
 import { useValidation } from "../../../../context/validate";
 import SingleImageUploader from "../../../../components/common/image-upload";
 import { CommonTextFieldVer2 } from "../../../../components/common/text-field/text-field-2";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { CommonBooleanCheckboxVer2 } from "../../../../components/common/check-box/check-box-boolean-ver2";
 
 export const Variant = () => {
@@ -21,20 +21,21 @@ export const Variant = () => {
     updated[index] = { ...updated[index], [field]: value };
     setFieldValue("productVariants", updated);
   };
+  const [generatedVariants, setGeneratedVariants] = useState<IVariantItem[]>(
+    []
+  );
 
   const propertyValue1 = formData.propertyValue1 ?? [];
   const propertyValue2 = formData.propertyValue2 ?? [];
+  console.log(propertyValue1);
 
   useEffect(() => {
-    const generateVariants = (
-      values1: string[],
-      values2: string[]
-    ): IVariantItem[] => {
-      const variants: IVariantItem[] = [];
+    if (propertyValue1.length > 0 && propertyValue2.length > 0) {
+      const newVariants: IVariantItem[] = [];
 
-      for (const val1 of values1) {
-        for (const val2 of values2) {
-          variants.push({
+      for (const val1 of propertyValue1) {
+        for (const val2 of propertyValue2) {
+          newVariants.push({
             propertyValue1: val1,
             propertyValue2: val2,
             price: 0,
@@ -45,11 +46,13 @@ export const Variant = () => {
         }
       }
 
-      return variants;
-    };
-    if (propertyValue1.length > 0 && propertyValue2.length > 0) {
-      const generated = generateVariants(propertyValue1, propertyValue2);
-      const merged = generated.map((gen) => {
+      setGeneratedVariants(newVariants);
+    }
+  }, [propertyValue1, propertyValue2]);
+
+  useEffect(() => {
+    if (generatedVariants.length > 0) {
+      const merged = generatedVariants.map((gen) => {
         const old = variants.find(
           (v) =>
             v.propertyValue1 === gen.propertyValue1 &&
@@ -58,9 +61,13 @@ export const Variant = () => {
         return old ? { ...gen, ...old } : gen;
       });
 
-      setFieldValue("productVariants", merged);
+      const isDifferent = JSON.stringify(variants) !== JSON.stringify(merged);
+      if (isDifferent) {
+        setFieldValue("productVariants", merged);
+      }
     }
-  }, [propertyValue1, propertyValue2]);
+  }, [generatedVariants]);
+
   return (
     <CommonCart title="Biến thể">
       <Box

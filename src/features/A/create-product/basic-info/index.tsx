@@ -9,7 +9,7 @@ import { useValidation } from "../../../../context/validate";
 import { CommonButtonIcon } from "../../../../components/common/button/button-icon";
 import AddIcon from "@mui/icons-material/Add";
 import { CommonDialog } from "../../../../components/common/dialog";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { CommonTextFieldVer2 } from "../../../../components/common/text-field/text-field-2";
 import ProductService from "../../../../services/product.service";
 
@@ -17,6 +17,20 @@ export const ProductBasicInfo = () => {
   const { setFieldValue, formData } = useValidation<IProductCreateSchema>();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [categoryName, setcategoryName] = useState<string>("");
+  const [categories, setCategories] = useState<any[]>([]);
+
+  const fetchData = useCallback(async () => {
+    const res = await ProductService.getAllCategory();
+    let cate = res.map((cate: any) => ({
+      value: cate.id.toString(),
+      label: cate.name,
+    }));
+    setCategories(cate);
+  }, []);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <CommonCart>
@@ -36,10 +50,7 @@ export const ProductBasicInfo = () => {
           <CommonDropdown<IProductCreateSchema>
             name="categoryId"
             helpText="Trường này không bắt buộc nhưng nên có để cải thiện hiệu xuất tìm kiếm"
-            options={[
-              { value: "Nam", label: "Nam" },
-              { value: "Nữ", label: "Nữ" },
-            ]}
+            options={categories}
             label={"Loại"}
           />
           <Box sx={{ width: 30, height: 30 }}>
@@ -61,6 +72,7 @@ export const ProductBasicInfo = () => {
           await ProductService.createCategory(categoryName);
           setIsOpen(false);
           setcategoryName("");
+          fetchData();
         }}
       >
         <Box sx={{ p: 1 }}>

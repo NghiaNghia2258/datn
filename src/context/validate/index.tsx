@@ -51,7 +51,7 @@ export const ValidationProvider = <T,>({
       let parsedValue = value as any;
       if (schema) {
         let fieldSchema = schema.shape[field as string];
-        if (fieldSchema._def?.innerType) {
+        if (fieldSchema?._def?.innerType) {
           fieldSchema = fieldSchema._def.innerType;
         }
         if (fieldSchema instanceof ZodNumber) {

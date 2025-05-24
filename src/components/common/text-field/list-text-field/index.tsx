@@ -32,24 +32,14 @@ export const DynamicInputArray = <T,>({
   // Khởi tạo state để theo dõi các giá trị input
   const [inputValues, setInputValues] = useState<string[]>([""]);
 
-  // Cập nhật formData khi inputValues thay đổi
+  // Đồng bộ formData vào inputValues (chỉ khi formData thay đổi từ bên ngoài)
   useEffect(() => {
-    setFieldValue(
-      name as keyof T,
-      inputValues.filter((val) => val !== "") as T[keyof T]
-    );
-  }, [inputValues, name, setFieldValue]);
+    const current = (formData[name] as string[]) ?? [];
+    const filtered = current.filter((v) => v !== "");
+    const withEmpty = [...filtered, ""];
 
-  // Lấy giá trị từ formData khi component được mount
-  useEffect(() => {
-    if (formData[name] && Array.isArray(formData[name])) {
-      const values = formData[name] as string[];
-      // Luôn đảm bảo có một ô input trống ở cuối
-      if (values.length > 0 && values[values.length - 1] !== "") {
-        setInputValues([...values, ""]);
-      } else {
-        setInputValues(values.length > 0 ? values : [""]);
-      }
+    if (JSON.stringify(withEmpty) !== JSON.stringify(inputValues)) {
+      setInputValues(withEmpty);
     }
   }, [JSON.stringify(formData[name])]);
 
@@ -64,6 +54,13 @@ export const DynamicInputArray = <T,>({
     }
 
     setInputValues(newValues);
+
+    const filtered = newValues.filter((val) => val !== "");
+    const current = (formData[name] as string[]) ?? [];
+
+    if (JSON.stringify(filtered) !== JSON.stringify(current)) {
+      setFieldValue(name as keyof T, filtered as T[keyof T]);
+    }
   };
 
   // Xóa một input
@@ -77,6 +74,9 @@ export const DynamicInputArray = <T,>({
       }
 
       setInputValues(newValues);
+
+      const filtered = newValues.filter((val) => val !== "");
+      setFieldValue(name as keyof T, filtered as T[keyof T]);
     }
   };
 

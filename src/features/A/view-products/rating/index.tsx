@@ -67,7 +67,7 @@ export const RatingStatistics: FC = () => {
                 color="primary"
                 sx={{ fontWeight: "bold" }}
               >
-                {rate.rate.toFixed(1)}
+                {rate.rate?.toFixed(1)}
               </Typography>
               <Rating value={rate.rate} precision={0.5} readOnly size="large" />
               <Typography variant="body2" color="text.secondary">
