@@ -45,5 +45,6 @@ export interface Product {
     category: string;
     brand: string;
     shortDescription: string;
+    isFavorite: boolean;
   }
   

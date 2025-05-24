@@ -1,7 +1,7 @@
 import { Customer, CustomerCreate, CustomerUpdate } from "../features/A/view-customer/zod";
 import { RequestGetAllCustomers } from "./request/customer.request";
 import { CustomerDashboardStats, CustomerDetailStats } from "./response/customer.response";
-
+import * as axios from './axios-instance';
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -48,6 +48,14 @@ export default class CustomerService {
   static async create(model: CustomerCreate): Promise<void> {
     console.log("Create customer: ", model);
     await delay(2000);
+  }
+
+  static async addWishList(productId: string, isAdd: boolean): Promise<void> {
+    const response = await axios.GET(`customer/addOrRemoveWishList`, {
+      productId,
+      isAdd
+    });
+      return response.data;
   }
 
   static async update(model: CustomerUpdate): Promise<void> {

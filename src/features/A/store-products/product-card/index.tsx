@@ -17,6 +17,7 @@ import { Product } from "../../../../context/U/store-products/store-product.resp
 import { formatPrice } from "../../../../utils/format-price";
 import { useNavigateCommon } from "../../../../hooks/navigate";
 import { USER_URLS } from "../../../../routes/AppRoutes";
+import CustomerService from "../../../../services/customer.service";
 type ProductCardProps = Product;
 export const ProductCard: FC<ProductCardProps> = ({
   id,
@@ -30,11 +31,14 @@ export const ProductCard: FC<ProductCardProps> = ({
   price,
   originalPrice,
   isBestSeller,
+  isFavorite,
 }) => {
-  const [favorite, setFavorite] = useState(false);
+  console.log(discount);
+  const [favorite, setFavorite] = useState(isFavorite);
   const navigate = useNavigateCommon();
-  const handleFavoriteClick = () => {
+  const handleFavoriteClick = async () => {
     setFavorite(!favorite);
+    await CustomerService.addWishList(id, !favorite);
   };
   return (
     <Card
@@ -92,7 +96,7 @@ export const ProductCard: FC<ProductCardProps> = ({
           "&:hover": { backgroundColor: "white" },
           zIndex: 1,
         }}
-        onClick={handleFavoriteClick}
+        onClick={() => handleFavoriteClick()}
       >
         {favorite ? <Favorite color="error" /> : <FavoriteBorder />}
       </IconButton>

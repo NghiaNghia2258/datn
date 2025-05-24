@@ -13,7 +13,7 @@ interface ProductProps {
   name: string;
   price: string;
   image: string;
-  discount: string;
+  discount?: string;
 }
 
 const Product: React.FC<ProductProps> = ({ name, price, image, discount }) => {
@@ -45,9 +45,11 @@ const Product: React.FC<ProductProps> = ({ name, price, image, discount }) => {
             borderRadius: 1,
           }}
         >
-          <Typography variant="caption" fontWeight="bold">
-            -{discount}
-          </Typography>
+          {discount && (
+            <Typography variant="caption" fontWeight="bold">
+              -{discount}%
+            </Typography>
+          )}
         </Box>
       </Box>
       <CardContent sx={{ flexGrow: 1 }}>

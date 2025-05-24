@@ -27,7 +27,6 @@ const featuredProducts = [
     price: "34.990.000 ₫",
     image:
       "https://th.bing.com/th/id/OIP.1J1hoDxnNalGehuBBjWkDQHaHa?w=173&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7",
-    discount: "10%",
   },
   {
     id: 2,
