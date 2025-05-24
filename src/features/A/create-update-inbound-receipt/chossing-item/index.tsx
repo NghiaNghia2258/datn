@@ -26,7 +26,7 @@ export const DialogInboundProductSelector: FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await ProductService.getInboundSelectableProducts();
-      setProducts(response);
+      setProducts(response.data);
     };
     fetchData();
   }, []);

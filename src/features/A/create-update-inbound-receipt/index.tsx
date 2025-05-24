@@ -18,8 +18,14 @@ import InboundReceiptService from "../../../services/inbound-receipt.service";
 const FeatCreateInboundReceipt: FC = () => {
   const { showToast } = useToast();
   const { receiptId } = useCreateUpdateInboundReceipt();
-  const { setSchema, setFormData, validateForm, setFieldValue, formData } =
-    useValidation<IInboundReceiptCreateSchema>();
+  const {
+    setSchema,
+    setFormData,
+    validateForm,
+    setFieldValue,
+    formData,
+    validationErrors,
+  } = useValidation<IInboundReceiptCreateSchema>();
 
   const { selectedProducts } = useCreateUpdateInboundReceipt();
   useEffect(() => {

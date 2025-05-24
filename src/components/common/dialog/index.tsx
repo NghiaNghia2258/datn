@@ -59,7 +59,15 @@ export const CommonDialog: FC<CommonDialogProps> = ({
         >
           {title}
         </Typography>
-        <Box>{children}</Box>
+        <Box
+          sx={{
+            maxHeight: "80vh",
+            overflowY: "auto",
+            p: 2,
+          }}
+        >
+          {children}
+        </Box>
         {showButton && (
           <Box sx={{ borderTop: "1px solid #938a8a80" }}>
             <Box

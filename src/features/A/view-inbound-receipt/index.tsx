@@ -7,6 +7,7 @@ import CommonPage from "../../../components/common/page";
 import { CommonCart } from "../../../components/common/card";
 import { DASHBOARD_URLS } from "../../../routes/AppRoutes";
 import { useNavigateCommon } from "../../../hooks/navigate";
+import { formatDateOnly } from "../../../utils/format-date";
 
 const FeatViewInboundReceipts = () => {
   const { showToast } = useToast();
@@ -31,7 +32,7 @@ const FeatViewInboundReceipts = () => {
     try {
       setLoading(true);
       const res = await InboundReceiptService.getAll(params);
-      setReceipts(res || []);
+      setReceipts(res.data || []);
     } catch (err) {
       showToast("Lỗi khi tải danh sách phiếu nhập kho");
     } finally {
@@ -59,8 +60,16 @@ const FeatViewInboundReceipts = () => {
   }, [pagingOptions.currentPage, pagingOptions.rowsPerPage]);
 
   const columns = [
-    { id: "receiptId", label: "Mã phiếu" },
-    { id: "createdAt", label: "Ngày nhập" },
+    {
+      id: "receiptId",
+      label: "Mã phiếu",
+      render: (row) => <p>{row.split("-")[0]}</p>,
+    },
+    {
+      id: "createdAt",
+      label: "Ngày nhập",
+      render: (row) => <p>{formatDateOnly(row)}</p>,
+    },
     { id: "createdBy", label: "Người tạo" },
     { id: "supplierName", label: "Nhà cung cấp" },
     { id: "totalQuantity", label: "Tổng SL" },

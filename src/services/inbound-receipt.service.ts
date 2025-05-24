@@ -1,6 +1,7 @@
 import { IInboundReceiptCreateSchema, IInboundReceiptUpdateSchema } from "../features/A/create-update-inbound-receipt/zod";
 import { RequestGetAllInboundReceipts } from "./request/inbound-receipt.request";
 import { ResponseGetAllInboundReceipts } from "./response/inbound-receipt.response";
+import * as axios from './axios-instance';
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -8,34 +9,18 @@ export default class InboundReceiptService {
   static async getAll(
     options?: RequestGetAllInboundReceipts
   ): Promise<ResponseGetAllInboundReceipts[]> {
-    console.log("getAll Inbound Receipts with options:", options);
-    await delay(2000);
-
-    const mockData: ResponseGetAllInboundReceipts[] = [
-      {
-        receiptId: "PR001",
-        createdAt: "2024-04-01T10:00:00.000Z",
-        createdBy: "admin",
-        supplierName: "Công ty A",
-        totalQuantity: 100,
-        totalValue: 2000000,
+    const response = await axios.GET(`inboundreceipts`, {
+      params: {
+        ...options,
+        pageIndex : (options?.pageIndex ?? 0) + 1
       },
-      {
-        receiptId: "PR002",
-        createdAt: "2024-04-02T15:30:00.000Z",
-        createdBy: "admin",
-        supplierName: "Công ty B",
-        totalQuantity: 50,
-        totalValue: 750000,
-      },
-    ];
-
-    return mockData;
+    });
+    return response;
   }
 
   static async create(model: IInboundReceiptCreateSchema): Promise<void> {
-    console.log("Create Inbound Receipt:", model);
-    await delay(2000);
+    const response = await axios.POST(`inboundreceipts`, model);
+    return response.data;
   }
 
   static async update(model: IInboundReceiptUpdateSchema): Promise<void> {

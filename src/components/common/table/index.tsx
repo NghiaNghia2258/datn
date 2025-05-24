@@ -244,7 +244,7 @@ const CommonTable = <T,>({
         ) : (
           <Box>
             {/* Body */}
-            {data.map((row, rowIndex) => {
+            {(data ?? []).map((row, rowIndex) => {
               const nestedRows = getNestedRows
                 ? (getNestedRows(row) ?? [])
                 : [];
