@@ -116,9 +116,8 @@ const HomePage = () => {
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
       <BannerSlider banners={banners} />
       <Categories categories={categories} />
-      <ProductsList title="Có thể bạn sẽ thích" products={featuredProducts} />
-      <ProductsList title="Sản phẩm nổi bật" products={featuredProducts} />
       <ProductsList title="Sản phẩm bán chạy" products={bestSellers} />
+      <ProductsList title="Có thể bạn sẽ thích" products={featuredProducts} />
       <Promotions
         title="Nhận ưu đãi độc quyền"
         description="Đăng ký nhận thông tin để không bỏ lỡ các khuyến mãi hấp dẫn."

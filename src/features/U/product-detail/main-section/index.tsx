@@ -35,7 +35,6 @@ const ProductDetailMainSection: React.FC = () => {
     selectedProperty1,
     selectedProperty2,
     currentPrice,
-    currentStock,
     quantity,
     isAvailable,
     favorite,
@@ -175,22 +174,21 @@ const ProductDetailMainSection: React.FC = () => {
             {formatPrice(currentPrice)}
           </Typography>
 
-          {/* Màu sắc */}
           <Typography variant="subtitle1" sx={{ fontWeight: "bold", mb: 1 }}>
             {product.propertyName1}:
           </Typography>
           <Box sx={{ display: "flex", gap: 1, mb: 3 }}>
-            {product.propertyValue1.map((color) => {
-              const isActiveColor = color === selectedProperty1;
+            {product.propertyValue1.map((value1) => {
+              const isActiveColor = value1 === selectedProperty1;
               // Kiểm tra xem màu này có tồn tại biến thể nào không
               const hasVariants = product.productVariants.some(
-                (v) => v.propertyValue1 === color
+                (v) => v.propertyValue1 === value1
               );
 
               return (
                 <Box
-                  key={color}
-                  onClick={() => hasVariants && handleProperty1Change(color)}
+                  key={value1}
+                  onClick={() => hasVariants && handleProperty1Change(value1)}
                   sx={{
                     border: `2px solid ${isActiveColor ? theme.palette.primary.main : "transparent"}`,
                     borderRadius: 1,
@@ -200,16 +198,10 @@ const ProductDetailMainSection: React.FC = () => {
                   }}
                 >
                   <Chip
-                    label={color}
+                    label={value1}
                     sx={{
-                      backgroundColor:
-                        color.toLowerCase() === "trắng"
-                          ? "#FFFFFF"
-                          : color.toLowerCase() === "đen"
-                            ? "#000000"
-                            : color.toLowerCase(),
-                      color:
-                        color.toLowerCase() === "trắng" ? "#000000" : "#FFFFFF",
+                      backgroundColor: "#000",
+                      color: "#FFFFFF",
                       px: 1,
                     }}
                   />
@@ -223,19 +215,19 @@ const ProductDetailMainSection: React.FC = () => {
             {product.propertyName2}:
           </Typography>
           <Box sx={{ display: "flex", gap: 1, mb: 3, flexWrap: "wrap" }}>
-            {product.propertyValue2.map((size) => {
+            {product.propertyValue2.map((value2) => {
               // Kiểm tra xem có biến thể nào cho màu và kích cỡ này không
               const hasVariant = product.productVariants.some(
                 (v) =>
                   v.propertyValue1 === selectedProperty1 &&
-                  v.propertyValue2 === size
+                  v.propertyValue2 === value2
               );
-              const isActiveSize = size === selectedProperty2;
+              const isActiveSize = value2 === selectedProperty2;
 
               return (
                 <Box
-                  key={size}
-                  onClick={() => hasVariant && handleProperty2Change(size)}
+                  key={value2}
+                  onClick={() => hasVariant && handleProperty2Change(value2)}
                   sx={{
                     border: `2px solid ${isActiveSize ? theme.palette.primary.main : "transparent"}`,
                     borderRadius: 1,
@@ -244,7 +236,7 @@ const ProductDetailMainSection: React.FC = () => {
                   }}
                 >
                   <Chip
-                    label={size}
+                    label={value2}
                     variant={isActiveSize ? "filled" : "outlined"}
                     sx={{ minWidth: 48 }}
                   />
@@ -275,13 +267,13 @@ const ProductDetailMainSection: React.FC = () => {
             <Button
               variant="outlined"
               onClick={() => handleQuantityChange(1)}
-              disabled={quantity >= currentStock}
+              disabled={quantity >= (selectedVariant?.stock ?? 0)}
               sx={{ minWidth: 40, p: 0 }}
             >
               <Add />
             </Button>
             <Typography variant="body2" sx={{ ml: 2, color: "text.secondary" }}>
-              Còn {currentStock} sản phẩm
+              Còn {selectedVariant?.stock} sản phẩm
             </Typography>
           </Box>
 
@@ -298,10 +290,13 @@ const ProductDetailMainSection: React.FC = () => {
               variant="contained"
               size="large"
               startIcon={<AddShoppingCart />}
-              onClick={handleAddToCart}
+              onClick={() => selectedVariant?.stock && handleAddToCart()}
               disabled={!isAvailable}
               fullWidth
-              sx={{ py: 1.5 }}
+              sx={{
+                py: 1.5,
+                cursor: selectedVariant?.stock ? "pointer" : "not-allowed",
+              }}
             >
               Thêm vào giỏ hàng
             </Button>

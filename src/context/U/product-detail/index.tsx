@@ -13,6 +13,7 @@ import { useParams } from "react-router-dom";
 import ProductService from "../../../services/product.service";
 
 interface ProductDetailContextType {
+  id: string | undefined;
   product: IProductCreateSchema;
   selectedProperty1: string;
   selectedProperty2: string;
@@ -103,6 +104,7 @@ export const ProductDetailProvider: React.FC<{ children: ReactNode }> = ({
   const handleProperty2Change = (property2: string) => {
     setSelectedProperty2(property2);
   };
+
   useEffect(() => {
     getReviews();
     getProductDetail();
@@ -110,6 +112,7 @@ export const ProductDetailProvider: React.FC<{ children: ReactNode }> = ({
   return (
     <ProductDetailContext.Provider
       value={{
+        id,
         openPopupReview,
         setOpenPopupReview,
         snackbarOpen,

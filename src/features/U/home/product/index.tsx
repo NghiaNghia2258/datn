@@ -7,6 +7,8 @@ import {
   Typography,
   Box,
 } from "@mui/material";
+import { USER_URLS } from "../../../../routes/AppRoutes";
+import { useNavigateCommon } from "../../../../hooks/navigate";
 
 interface ProductProps {
   id: number;
@@ -16,7 +18,15 @@ interface ProductProps {
   discount?: string;
 }
 
-const Product: React.FC<ProductProps> = ({ name, price, image, discount }) => {
+const Product: React.FC<ProductProps> = ({
+  id,
+  name,
+  price,
+  image,
+  discount,
+}) => {
+  const navigate = useNavigateCommon();
+
   return (
     <Card
       sx={{
@@ -33,24 +43,24 @@ const Product: React.FC<ProductProps> = ({ name, price, image, discount }) => {
     >
       <Box sx={{ position: "relative" }}>
         <CardMedia component="img" height="200" image={image} alt={name} />
-        <Box
-          sx={{
-            position: "absolute",
-            top: 10,
-            right: 10,
-            backgroundColor: "error.main",
-            color: "white",
-            px: 1,
-            py: 0.5,
-            borderRadius: 1,
-          }}
-        >
-          {discount && (
+        {discount && (
+          <Box
+            sx={{
+              position: "absolute",
+              top: 10,
+              right: 10,
+              backgroundColor: "error.main",
+              color: "white",
+              px: 1,
+              py: 0.5,
+              borderRadius: 1,
+            }}
+          >
             <Typography variant="caption" fontWeight="bold">
               -{discount}%
             </Typography>
-          )}
-        </Box>
+          </Box>
+        )}
       </Box>
       <CardContent sx={{ flexGrow: 1 }}>
         <Typography gutterBottom variant="subtitle1" component="div" noWrap>
@@ -61,8 +71,15 @@ const Product: React.FC<ProductProps> = ({ name, price, image, discount }) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small" variant="contained" fullWidth>
-          Thêm vào giỏ
+        <Button
+          size="small"
+          variant="contained"
+          fullWidth
+          onClick={() => {
+            navigate(`${USER_URLS.PRODUCT_DETAIL}/${id}`);
+          }}
+        >
+          Xem
         </Button>
       </CardActions>
     </Card>

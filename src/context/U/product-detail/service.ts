@@ -1,5 +1,6 @@
 import { ApiResult } from "../../../services";
 import { Review } from "./response";
+import * as axios from '../../../services/axios-instance';
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -41,13 +42,11 @@ export default class ProductDetailService {
       }
       static async AddToCart(productId:string, property1: string, property2: string, quantity: number): Promise<boolean>{
         const request = {productId,property1,property2,quantity}
-        console.log("Add to cart",request);
-        await delay(1500);
+        await axios.POST("customer/add-to-cart", request);
         return true;
       }
       static async customeReview(reviewContent: any): Promise<boolean> {
-        await delay(1500);
-        console.log("Review: ", reviewContent);
+        await axios.POST("customer/review", reviewContent);
         return true;
       }
 }

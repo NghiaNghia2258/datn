@@ -26,7 +26,7 @@ function Category() {
           <ListItemText primary="Tất cả sản phẩm" />
         </ListItemButton>
 
-        {categories.map((category) => (
+        {(categories ?? []).map((category) => (
           <ListItemButton
             key={category}
             selected={selectedCategory === category}

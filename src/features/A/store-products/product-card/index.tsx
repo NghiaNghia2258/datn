@@ -33,7 +33,6 @@ export const ProductCard: FC<ProductCardProps> = ({
   isBestSeller,
   isFavorite,
 }) => {
-  console.log(discount);
   const [favorite, setFavorite] = useState(isFavorite);
   const navigate = useNavigateCommon();
   const handleFavoriteClick = async () => {
@@ -59,7 +58,7 @@ export const ProductCard: FC<ProductCardProps> = ({
     >
       {discount > 0 && (
         <Chip
-          label={`-${discount}%`}
+          label={`-${Math.floor(discount)}%`}
           color="error"
           size="small"
           sx={{

@@ -7,7 +7,6 @@ export default class UploadService{
       if(typeof file === 'string'){
          return file;
       }
-      debugger;
       const formData = new FormData();
       formData.append('file', file);
 
@@ -18,7 +17,7 @@ export default class UploadService{
                }
          });
 
-         return `https://localhost:7061/images/${response.data.data}`;
+         return `https://localhost:7061/api/upload/images/${response.data.data}`;
       } catch (error: any) {
          console.error('Upload error:', error);
          throw new Error(error?.response?.data?.message || 'Lỗi khi upload file');

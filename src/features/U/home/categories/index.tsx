@@ -18,7 +18,7 @@ const Categories: React.FC<CategoriesProps> = ({ categories }) => {
         Danh mục sản phẩm
       </Typography>
       <Grid container spacing={2}>
-        {categories.map((category) => (
+        {(categories ?? []).map((category) => (
           <Grid item xs={4} sm={2} key={category.id}>
             <Paper
               elevation={1}

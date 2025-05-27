@@ -15,7 +15,7 @@ export default function StoreNavigationTabs() {
         scrollButtons="auto"
       >
         <Tab label="Tất cả sản phẩm" />
-        {categories.map((category) => (
+        {(categories ?? []).map((category) => (
           <Tab key={category} label={category} />
         ))}
         <Tab label="Thông tin cửa hàng" />

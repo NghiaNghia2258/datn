@@ -20,15 +20,10 @@ import ProductDetailService from "../../../../context/U/product-detail/service";
 
 // Labels for rating hover state
 const labels = {
-  0.5: "Rất tệ",
   1: "Tệ",
-  1.5: "Yếu",
   2: "Không tốt",
-  2.5: "Bình thường",
   3: "Khá",
-  3.5: "Tốt",
   4: "Rất tốt",
-  4.5: "Xuất sắc",
   5: "Tuyệt vời",
 };
 
@@ -154,7 +149,7 @@ const ReviewModal = () => {
                 <Rating
                   name="rating"
                   value={value}
-                  precision={0.5}
+                  precision={1}
                   size="large"
                   onChange={(_, newValue) => {
                     setValue(newValue ?? 0);

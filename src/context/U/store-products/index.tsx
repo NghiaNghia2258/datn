@@ -61,6 +61,7 @@ export const StoreProductProvider: React.FC<{ children: ReactNode }> = ({
   });
 
   const getProducts = async () => {
+    if (!optionFilter.storeId) return;
     const res = await StoreProductService.GetProduct(optionFilter);
     if (res.isSucceeded) {
       setProducts(res.data ?? []);

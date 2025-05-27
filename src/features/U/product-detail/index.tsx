@@ -62,8 +62,6 @@ const relatedProducts = [
 const ProductDetailPage = () => {
   const { reviews, product, snackbarOpen, setSnackbarOpen } =
     useProductDetail();
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [tabValue, setTabValue] = useState(0);
 
   const categories = ["Áo", "Áo polo"];
@@ -100,38 +98,6 @@ const ProductDetailPage = () => {
           >
             {tabValue === 0 && (
               <>
-                <Typography variant="h6" gutterBottom>
-                  Thông tin chi tiết
-                </Typography>
-                <Typography variant="body1" paragraph>
-                  Áo thun nam cổ tròn chất liệu cotton 100%, thoáng mát, thấm
-                  hút mồ hôi tốt. Áo có thiết kế đơn giản với cổ tròn cổ điển,
-                  phù hợp với nhiều phong cách thời trang khác nhau. Sản phẩm lý
-                  tưởng cho những ngày hè nóng bức hoặc khi tham gia các hoạt
-                  động thể thao.
-                </Typography>
-
-                <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
-                  Đặc điểm nổi bật
-                </Typography>
-                <ul>
-                  <Typography component="li" variant="body1">
-                    Chất liệu cotton 100% mềm mại, thấm hút mồ hôi tốt
-                  </Typography>
-                  <Typography component="li" variant="body1">
-                    Thiết kế đơn giản, dễ phối với nhiều trang phục khác
-                  </Typography>
-                  <Typography component="li" variant="body1">
-                    Đường may tỉ mỉ, chắc chắn
-                  </Typography>
-                  <Typography component="li" variant="body1">
-                    Màu sắc đa dạng, phù hợp với nhiều sở thích
-                  </Typography>
-                  <Typography component="li" variant="body1">
-                    Dễ dàng giặt và bảo quản
-                  </Typography>
-                </ul>
-
                 <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
                   Thông số sản phẩm
                 </Typography>
@@ -258,7 +224,7 @@ const ProductDetailPage = () => {
               >
                 <CardMedia
                   component="img"
-                  height={isMobile ? 120 : 180}
+                  height={180}
                   image={product.image}
                   alt={product.name}
                 />
@@ -312,7 +278,7 @@ const ProductDetailPage = () => {
                 >
                   <CardMedia
                     component="img"
-                    height={isMobile ? 120 : 180}
+                    height={180}
                     image={product.image}
                     alt={product.name}
                   />
