@@ -75,32 +75,32 @@ interface ShippingMethod {
 
 const paymentMethods: PaymentMethod[] = [
   {
-    id: "payment-1",
+    id: "cod",
     type: "COD",
     name: "Thanh toán khi nhận hàng",
     icon: <PaymentIcon />,
     description: "Thanh toán bằng tiền mặt khi nhận được hàng",
   },
   {
-    id: "payment-2",
+    id: "CREDIT_CARD",
     type: "CREDIT_CARD",
     name: "Thẻ tín dụng/Ghi nợ",
     icon: <CreditCardIcon />,
     description: "Thanh toán bằng thẻ Visa, MasterCard, JCB",
   },
   {
-    id: "payment-3",
+    id: "BANK_TRANSFER",
     type: "BANK_TRANSFER",
     name: "Chuyển khoản ngân hàng",
     icon: <AccountBalanceIcon />,
     description: "Chuyển khoản qua các ngân hàng nội địa",
   },
   {
-    id: "payment-4",
+    id: "VNPay",
     type: "E_WALLET",
     name: "Ví điện tử",
     icon: <CreditCardIcon />,
-    description: "Thanh toán qua Momo, ZaloPay, VNPay",
+    description: "Thanh toán qua VNPay",
   },
 ];
 
@@ -182,7 +182,7 @@ const CheckoutPage: React.FC = () => {
   const [selectedShippingMethodId, setSelectedShippingMethodId] =
     useState<string>("shipping-1");
   const [selectedPaymentMethodId, setSelectedPaymentMethodId] =
-    useState<string>("payment-1");
+    useState<string>("cod");
   const [appliedVoucherId, setAppliedVoucherId] = useState<string | null>(null);
   const [voucherCode, setVoucherCode] = useState<string>("");
   const [note, setNote] = useState<string>("");
@@ -458,6 +458,7 @@ const CheckoutPage: React.FC = () => {
       selectedAddressId,
       selectedShippingMethodId,
       selectedPaymentMethodId,
+      totalPrice: total,
     });
     setIsProcessing(false);
     setOrderConfirmationOpen(true);

@@ -18,6 +18,7 @@ import {
   Search as SearchIcon,
 } from "@mui/icons-material";
 import { useState } from "react";
+import { useNavigateCommon } from "../../../hooks/navigate";
 
 // Tạo container cho thanh tìm kiếm
 const Search = styled("div")(({ theme }) => ({
@@ -62,7 +63,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 const Header = () => {
   const [searchText, setSearchText] = useState("");
-
+  const navigate = useNavigateCommon();
   return (
     <AppBar position="fixed" color="primary" elevation={0}>
       <Toolbar>
@@ -77,6 +78,7 @@ const Header = () => {
         </IconButton>
 
         <Typography
+          onClick={() => navigate("/home")}
           variant="h6"
           noWrap
           component="div"
@@ -94,6 +96,11 @@ const Header = () => {
             inputProps={{ "aria-label": "search" }}
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                navigate(`search-products/${searchText}`);
+              }
+            }}
           />
         </Search>
 
@@ -110,7 +117,11 @@ const Header = () => {
               <FavoriteIcon />
             </Badge>
           </IconButton>
-          <IconButton size="large" color="inherit">
+          <IconButton
+            size="large"
+            color="inherit"
+            onClick={() => navigate("/cart")}
+          >
             <Badge badgeContent={2} color="error">
               <ShoppingCartIcon />
             </Badge>

@@ -60,7 +60,7 @@ const relatedProducts = [
 ];
 
 const ProductDetailPage = () => {
-  const { reviews, product, snackbarOpen, setSnackbarOpen } =
+  const { reviews, product, snackbarOpen, setSnackbarOpen, avgRV, totalRV } =
     useProductDetail();
   const [tabValue, setTabValue] = useState(0);
 
@@ -86,7 +86,7 @@ const ProductDetailPage = () => {
             sx={{ borderBottom: 1, borderColor: "divider" }}
           >
             <Tab label="Chi tiết sản phẩm" id="tab-0" />
-            <Tab label="Đánh giá (25)" id="tab-1" />
+            <Tab label={`Đánh giá (${totalRV})`} id="tab-1" />
           </Tabs>
 
           {/* Chi tiết sản phẩm */}
@@ -153,11 +153,13 @@ const ProductDetailPage = () => {
                         variant="h3"
                         sx={{ fontWeight: "bold", mr: 2 }}
                       >
-                        4.7
+                        {avgRV}
                       </Typography>
                       <Box>
-                        <Rating value={4.7} precision={0.1} readOnly />
-                        <Typography variant="body2">25 đánh giá</Typography>
+                        <Rating value={avgRV} precision={0.1} readOnly />
+                        <Typography variant="body2">
+                          {totalRV} đánh giá
+                        </Typography>
                       </Box>
                     </Box>
                   </Box>

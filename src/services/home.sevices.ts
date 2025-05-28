@@ -1,14 +1,15 @@
 import * as axios from './axios-instance';
 
 
-export default class InboundReceiptService {
+export default class HomeService {
   static async GetBestSeller(
-    options?: any
   ): Promise<any[]> {
-    const response = await axios.GET(`home/get-best-seller`, {
-      params: options,
-    });
+    const response = await axios.GET(`home/get-best-seller`);
     return response;
   }
-
+  static async GetRecomend(
+  ): Promise<any[]> {
+    const response = await axios.GET(`home/get-recommend`);
+    return response;
+  }
 }

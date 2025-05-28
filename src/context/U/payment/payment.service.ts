@@ -1,36 +1,12 @@
 import { Address, Voucher } from "../../../features/U/payment/payment.response";
+import * as axios from '../../../services/axios-instance';
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export default class PaymentService {
   static async getAddress(): Promise<Address[]> {
-    console.log("getAll Address");
-    await delay(2000);
-
-    const res: Address[] = [
-        {
-          id: "1",
-          fullName: "Nguyễn Văn A",
-          phoneNumber: "0901234567",
-          addressLine1: "123 Đường Lê Lợi",
-          ward: "Phường Bến Nghé",
-          district: "Quận 1",
-          province: "TP. Hồ Chí Minh",
-          isDefault: true,
-        },
-        {
-          id: "2",
-          fullName: "Nguyễn Văn A",
-          phoneNumber: "0901234567",
-          addressLine1: "45 Đường Nguyễn Huệ",
-          addressLine2: "Tòa nhà Sunwah",
-          ward: "Phường Bến Nghé",
-          district: "Quận 1",
-          province: "TP. Hồ Chí Minh",
-          isDefault: false,
-        },
-      ];
-    return res;
+    const res = await axios.GET("shippingaddress/my-addresses");
+    return res.data
   }
   static async getVoucher(): Promise<Voucher[]> {
     console.log("getAll Voucher");
@@ -74,15 +50,25 @@ export default class PaymentService {
     return res;
   }
   static async createAddress(model: any): Promise<void>{
-    console.log("Create address", model)
+    const res = await axios.POST("shippingaddress", model);
+    return res.data
   }
   static async PlaceOrder(model: any): Promise<void>{
-    await delay(3000);
-    console.log("PlaceOrder", model)
+
+    if(model.selectedPaymentMethodId == "VNPay"){
+      const res = await axios.GET("payment/createpaymenturl", {
+        params: {
+          money: model.totalPrice,
+          description: "Payment"
+        },
+      });
+      window.open(res, "_blank");
+    }
+    
   }
   static async removeProductFromCart(productId: string): Promise<void>{
-    console.log("remove from cart productId", productId);
-    await delay(2000);
+    const res = await axios.DELETE(`order/remove-from-cart/${productId}`);
+    return res.data
   }
   
 }

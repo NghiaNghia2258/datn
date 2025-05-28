@@ -43,6 +43,8 @@ const ProductDetailMainSection: React.FC = () => {
     handleProperty1Change,
     handleProperty2Change,
     setFavorite,
+    totalRV,
+    avgRV,
   } = useProductDetail();
   const theme = useTheme();
 
@@ -153,14 +155,11 @@ const ProductDetailMainSection: React.FC = () => {
           </Typography>
 
           <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
-            <Rating value={4.5} precision={0.5} readOnly />
+            <Rating value={avgRV} precision={0.5} readOnly />
             <Typography variant="body2" sx={{ ml: 1 }}>
-              (25 đánh giá)
+              ({totalRV} đánh giá)
             </Typography>
             <Divider orientation="vertical" flexItem sx={{ mx: 2 }} />
-            <Typography variant="body2" color="text.secondary">
-              Đã bán: 120
-            </Typography>
           </Box>
 
           <Typography

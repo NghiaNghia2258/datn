@@ -1,18 +1,9 @@
 import { Box, Grid, Typography } from "@mui/material";
-import Product from "../product";
-
-interface ProductItem {
-  id: number;
-  name: string;
-  price: string;
-  image: string;
-  discount?: string; // Discount can be optional for BestSellers
-  rating?: number; // Rating can be optional for FeaturedProducts
-}
+import { ProductCard } from "../../../A/store-products/product-card";
 
 interface ProductsListProps {
   title: string;
-  products: ProductItem[];
+  products: any[];
 }
 
 const ProductsList: React.FC<ProductsListProps> = ({ title, products }) => {
@@ -22,15 +13,9 @@ const ProductsList: React.FC<ProductsListProps> = ({ title, products }) => {
         {title}
       </Typography>
       <Grid container spacing={2}>
-        {products.map((product) => (
+        {(products ?? []).map((product) => (
           <Grid item xs={6} sm={6} md={3} key={product.id}>
-            <Product
-              id={product.id}
-              name={product.name}
-              price={product.price}
-              image={product.image}
-              discount={product.discount ?? ""}
-            />
+            <ProductCard {...product} />
           </Grid>
         ))}
       </Grid>

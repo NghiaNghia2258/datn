@@ -74,7 +74,6 @@ export const StoreProductProvider: React.FC<{ children: ReactNode }> = ({
     setBrands(res);
   };
   const handleSelectBrand = (brand: Brand) => {
-    console.log(brand);
     const currentIndex = selectedBrands.indexOf(brand);
     const newSelectedBrands = [...selectedBrands];
 

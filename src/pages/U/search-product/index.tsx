@@ -60,6 +60,8 @@ import {
 
 import { styled, alpha } from "@mui/material/styles";
 import { ProductCard } from "../../../features/A/store-products/product-card";
+import StoreProductService from "../../../context/U/store-products/store-product.service";
+import { useParams } from "react-router-dom";
 
 // Định nghĩa styled components
 const Search = styled("div")(({ theme }) => ({
@@ -88,203 +90,6 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
   justifyContent: "center",
 }));
 
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: "20ch",
-    },
-  },
-}));
-
-// Dữ liệu sản phẩm mẫu
-const sampleProducts = [
-  {
-    id: 1,
-    name: "iPhone 15 Pro Max 256GB",
-    shortDescription:
-      "Điện thoại Apple iPhone 15 Pro Max mới nhất với camera cải tiến và chip A17 Pro siêu mạnh",
-    price: 33990000,
-    originalPrice: 35990000,
-    discount: 5,
-    rating: 4.8,
-    reviewCount: 124,
-    images: ["https://via.placeholder.com/300x300?text=iPhone+15+Pro"],
-    isNew: true,
-    isBestSeller: true,
-    category: "Điện thoại",
-  },
-  {
-    id: 2,
-    name: "Samsung Galaxy S24 Ultra",
-    shortDescription:
-      "Smartphone cao cấp với bút S-Pen tích hợp, camera 200MP và chip Snapdragon 8 Gen 3",
-    price: 29990000,
-    originalPrice: 31990000,
-    discount: 6,
-    rating: 4.7,
-    reviewCount: 89,
-    images: ["https://via.placeholder.com/300x300?text=Samsung+S24"],
-    isNew: true,
-    isBestSeller: false,
-    category: "Điện thoại",
-  },
-  {
-    id: 3,
-    name: "MacBook Pro 14 inch M3 Pro",
-    shortDescription:
-      "Laptop Apple với chip M3 Pro mới nhất, màn hình Liquid Retina XDR và hiệu năng đỉnh cao",
-    price: 49990000,
-    originalPrice: 52990000,
-    discount: 5,
-    rating: 4.9,
-    reviewCount: 56,
-    images: ["https://via.placeholder.com/300x300?text=MacBook+Pro"],
-    isNew: true,
-    isBestSeller: true,
-    category: "Laptop",
-  },
-  {
-    id: 4,
-    name: "iPad Air 5 WiFi 64GB",
-    shortDescription:
-      "Máy tính bảng mỏng nhẹ với chip M1, màn hình Liquid Retina 10.9 inch",
-    price: 15990000,
-    originalPrice: 16990000,
-    discount: 5,
-    rating: 4.6,
-    reviewCount: 73,
-    images: ["https://via.placeholder.com/300x300?text=iPad+Air"],
-    isNew: false,
-    isBestSeller: true,
-    category: "Máy tính bảng",
-  },
-  {
-    id: 5,
-    name: "Tai nghe Apple AirPods Pro 2",
-    shortDescription:
-      "Tai nghe không dây với khả năng chống ồn chủ động, âm thanh không gian và chip H2",
-    price: 5990000,
-    originalPrice: 6990000,
-    discount: 14,
-    rating: 4.7,
-    reviewCount: 215,
-    images: ["https://via.placeholder.com/300x300?text=AirPods+Pro"],
-    isNew: false,
-    isBestSeller: true,
-    category: "Phụ kiện",
-  },
-  {
-    id: 6,
-    name: "Apple Watch Series 9 GPS 41mm",
-    shortDescription:
-      "Đồng hồ thông minh với màn hình Always-On, cảm biến sức khỏe và chip S9",
-    price: 9990000,
-    originalPrice: 10990000,
-    discount: 9,
-    rating: 4.5,
-    reviewCount: 87,
-    images: ["https://via.placeholder.com/300x300?text=Apple+Watch"],
-    isNew: false,
-    isBestSeller: false,
-    category: "Đồng hồ thông minh",
-  },
-  {
-    id: 7,
-    name: "Sony WH-1000XM5",
-    shortDescription:
-      "Tai nghe chụp tai không dây với khả năng chống ồn hàng đầu thị trường",
-    price: 8490000,
-    originalPrice: 9490000,
-    discount: 10,
-    rating: 4.8,
-    reviewCount: 134,
-    images: ["https://via.placeholder.com/300x300?text=Sony+WH-1000XM5"],
-    isNew: false,
-    isBestSeller: true,
-    category: "Phụ kiện",
-  },
-  {
-    id: 8,
-    name: "Dell XPS 13 Plus",
-    shortDescription:
-      "Laptop cao cấp với thiết kế mỏng nhẹ, màn hình 3.5K OLED và bàn phím haptic",
-    price: 39990000,
-    originalPrice: 41990000,
-    discount: 4,
-    rating: 4.6,
-    reviewCount: 42,
-    images: ["https://via.placeholder.com/300x300?text=Dell+XPS"],
-    isNew: true,
-    isBestSeller: false,
-    category: "Laptop",
-  },
-  {
-    id: 9,
-    name: "Samsung Galaxy Tab S9 Ultra",
-    shortDescription:
-      "Máy tính bảng với màn hình AMOLED 14.6 inch, Snapdragon 8 Gen 2 và bút S-Pen",
-    price: 24990000,
-    originalPrice: 26990000,
-    discount: 7,
-    rating: 4.5,
-    reviewCount: 31,
-    images: ["https://via.placeholder.com/300x300?text=Galaxy+Tab+S9"],
-    isNew: true,
-    isBestSeller: false,
-    category: "Máy tính bảng",
-  },
-  {
-    id: 10,
-    name: "Xiaomi 14 Ultra",
-    shortDescription:
-      "Smartphone cao cấp với hệ thống camera Leica, Snapdragon 8 Gen 3 và sạc siêu nhanh",
-    price: 21990000,
-    originalPrice: 23990000,
-    discount: 8,
-    rating: 4.4,
-    reviewCount: 27,
-    images: ["https://via.placeholder.com/300x300?text=Xiaomi+14+Ultra"],
-    isNew: true,
-    isBestSeller: false,
-    category: "Điện thoại",
-  },
-  {
-    id: 11,
-    name: "ASUS ROG Zephyrus G16",
-    shortDescription:
-      "Laptop gaming với GPU RTX 4070, CPU Intel Core i9 và màn hình 16 inch 240Hz",
-    price: 52990000,
-    originalPrice: 54990000,
-    discount: 3,
-    rating: 4.7,
-    reviewCount: 19,
-    images: ["https://via.placeholder.com/300x300?text=ROG+Zephyrus"],
-    isNew: true,
-    isBestSeller: false,
-    category: "Laptop",
-  },
-  {
-    id: 12,
-    name: "Google Pixel 8 Pro",
-    shortDescription:
-      "Smartphone với camera đỉnh cao, chip Tensor G3 và 7 năm cập nhật Android",
-    price: 23990000,
-    originalPrice: 25990000,
-    discount: 7,
-    rating: 4.6,
-    reviewCount: 53,
-    images: ["https://via.placeholder.com/300x300?text=Pixel+8+Pro"],
-    isNew: false,
-    isBestSeller: false,
-    category: "Điện thoại",
-  },
-];
-
 // Hàm format tiền tệ (được tích hợp trong ProductCard)
 const formatPrice = (price) => {
   return new Intl.NumberFormat("vi-VN", {
@@ -295,6 +100,7 @@ const formatPrice = (price) => {
 
 function App() {
   const theme = useTheme();
+  const { searchKey } = useParams();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   // State management
   const [products, setProducts] = useState([]);
@@ -324,11 +130,20 @@ function App() {
 
   // Simulate data fetching
   useEffect(() => {
-    // Simulate API call
-    setTimeout(() => {
-      setProducts(sampleProducts);
-      setLoading(false);
-    }, 500);
+    setLoading(true);
+
+    const featchData = async () => {
+      const res = await StoreProductService.GetProduct({
+        pageSize: 10,
+        pageIndex: 1,
+        keyWord: searchKey,
+      });
+      if (res.isSucceeded) {
+        setProducts(res.data as any);
+      }
+    };
+    featchData();
+    setLoading(false);
   }, []);
 
   // Filter and sort products
@@ -489,7 +304,7 @@ function App() {
               Chào mừng đến TechStore
             </Typography>
             <Typography variant="subtitle1" sx={{ mt: 1 }}>
-              Khám phá các sản phẩm công nghệ hàng đầu với giá ưu đãi
+              Khám phá các sản phẩm hàng đầu với giá ưu đãi
             </Typography>
             <Button
               variant="contained"
@@ -639,96 +454,6 @@ function App() {
                   }}
                 >
                   <ProductCard {...product} formatPrice={formatPrice} />
-                  <Box
-                    className="product-actions"
-                    sx={{
-                      position: "absolute",
-                      top: 0,
-                      left: 0,
-                      width: "100%",
-                      height: "100%",
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      backgroundColor: "rgba(0,0,0,0.5)",
-                      opacity: 0,
-                      transition: "opacity 0.3s",
-                      borderRadius: 1,
-                      zIndex: 2,
-                    }}
-                  >
-                    <Box sx={{ display: "flex", gap: 2 }}>
-                      <Tooltip title="Xem nhanh">
-                        <IconButton
-                          onClick={() => openQuickView(product)}
-                          sx={{
-                            backgroundColor: "white",
-                            "&:hover": {
-                              backgroundColor: "white",
-                              transform: "scale(1.1)",
-                            },
-                          }}
-                        >
-                          <VisibilityIcon />
-                        </IconButton>
-                      </Tooltip>
-                      <Tooltip title="Thêm vào giỏ">
-                        <IconButton
-                          onClick={() => addToCart(product)}
-                          sx={{
-                            backgroundColor: "primary.main",
-                            color: "white",
-                            "&:hover": {
-                              backgroundColor: "primary.dark",
-                              transform: "scale(1.1)",
-                            },
-                          }}
-                        >
-                          <ShoppingCartIcon />
-                        </IconButton>
-                      </Tooltip>
-                      <Tooltip
-                        title={
-                          wishlistItems.find((item) => item.id === product.id)
-                            ? "Xóa khỏi yêu thích"
-                            : "Thêm vào yêu thích"
-                        }
-                      >
-                        <IconButton
-                          onClick={() => toggleWishlist(product)}
-                          sx={{
-                            backgroundColor: wishlistItems.find(
-                              (item) => item.id === product.id
-                            )
-                              ? "error.main"
-                              : "white",
-                            color: wishlistItems.find(
-                              (item) => item.id === product.id
-                            )
-                              ? "white"
-                              : "inherit",
-                            "&:hover": {
-                              backgroundColor: wishlistItems.find(
-                                (item) => item.id === product.id
-                              )
-                                ? "error.dark"
-                                : "white",
-                              transform: "scale(1.1)",
-                            },
-                          }}
-                        >
-                          {wishlistItems.find(
-                            (item) => item.id === product.id
-                          ) ? (
-                            <Favorite />
-                          ) : (
-                            <FavoriteBorder />
-                          )}
-                        </IconButton>
-                      </Tooltip>
-                    </Box>
-                  </Box>
                 </Box>
               </Grid>
             ))}

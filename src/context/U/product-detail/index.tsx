@@ -35,6 +35,8 @@ interface ProductDetailContextType {
   setSnackbarOpen: (value: boolean) => void;
   setOpenPopupReview: (value: boolean) => void;
   openPopupReview: boolean;
+  totalRV: number;
+  avgRV: number;
 }
 
 export const ProductDetailContext = createContext<
@@ -57,12 +59,16 @@ export const ProductDetailProvider: React.FC<{ children: ReactNode }> = ({
   const [product, setProduct] = useState<IProductCreateSchema>(productData);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [openPopupReview, setOpenPopupReview] = useState(false);
+  const [totalRV, setTotalRV] = useState(0);
+  const [avgRV, setAvgRV] = useState(0);
 
   const getReviews = async () => {
     try {
       if (!id) return;
       setIsLoadingReviews(true);
       const res = await ProductDetailService.getReviews(id);
+      setAvgRV(res.avgRating);
+      setTotalRV(res.total);
       setReviews(res.data ?? []);
     } catch (error) {
       console.error("Error fetching reviews:", error);
@@ -113,6 +119,8 @@ export const ProductDetailProvider: React.FC<{ children: ReactNode }> = ({
     <ProductDetailContext.Provider
       value={{
         id,
+        totalRV,
+        avgRV,
         openPopupReview,
         setOpenPopupReview,
         snackbarOpen,
