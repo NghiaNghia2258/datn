@@ -39,32 +39,6 @@ export const DEFAULT_ROUTE: NavbarItemModel[] = [
     ],
   },
   {
-    title: "Quản lý nhân viên",
-    path: "employees",
-    icon: Grade,
-    children: [
-      {
-        title: "Danh sách nhân viên",
-        path: "/",
-      },
-      {
-        title: "Thêm nhân viên",
-        path: "add",
-      },
-    ],
-  },
-  {
-    title: "Khách hàng",
-    path: "customers",
-    icon: Groups,
-    children: [
-      {
-        title: "Danh sách khách hàng",
-        path: "/",
-      },
-    ],
-  },
-  {
     title: "Kho hàng",
     path: "inbounds",
     icon: Groups,
@@ -107,3 +81,43 @@ export const DEFAULT_ROUTE: NavbarItemModel[] = [
     ],
   },
 ];
+
+export const DEFAULT_ROUTE_1: NavbarItemModel[] = [
+  {
+    title: "Đơn hàng",
+    path: "orders",
+    icon: Fastfood,
+    children: [
+      {
+        title: "Danh sách đơn hàng",
+        path: "/",
+      },
+    ],
+  },
+  {
+    title: "Quản lý nhân viên",
+    path: "employees",
+    icon: Grade,
+    children: [
+      {
+        title: "Danh sách nhân viên",
+        path: "/",
+      },
+      {
+        title: "Thêm nhân viên",
+        path: "add",
+      },
+    ],
+  },
+  {
+    title: "Khách hàng",
+    path: "customers",
+    icon: Groups,
+    children: [
+      {
+        title: "Danh sách khách hàng",
+        path: "/",
+      },
+    ],
+  },
+]

@@ -24,8 +24,13 @@ import ViewVoucher from "../pages/A/view-vouchers";
 import CreateBandle from "../pages/A/create-bundle";
 import CreateVolume from "../pages/A/create-volume";
 import CreateVoucher from "../pages/A/create-voucher";
-import ViewOrders from "../pages/A/view-orders";
 import OrderDetail from "../pages/A/order-detail";
+import StoreRegistration from "../pages/U/sign-up";
+import CustomerRegistration from "../pages/A/customer-sing-up";
+import LoginForm from "../pages/login";
+import ViewOrders from "../pages/A/order";
+import FeatViewStores from "../pages/A/view-store";
+import StoreDetailManagement from "../pages/A/store-detail";
 
 export const DASHBOARD_URLS = {
   EMPLOYEE: {
@@ -114,6 +119,19 @@ const dashboardRoutes = [
     path: DASHBOARD_URLS.INBOUND.CREATE,
     element: <CreateUpdateInboundReceipt />,
   },
+  ,
+  {
+    path: `dashboard/orders`,
+    element: <ViewOrders />,
+  },
+  {
+    path: `dashboard/stores`,
+    element: <FeatViewStores />,
+  },
+  {
+    path: "dashboard/store-detail/:id",
+    element: <StoreDetailManagement />,
+  },
 ];
 
 const userRoutes = [
@@ -145,12 +163,21 @@ const userRoutes = [
     path: `${USER_URLS.SEARCH_PRODUCTS}/:searchKey`,
     element: <SearchProduct />,
   },
+
+  {
+    path: "store-regist",
+    element: <StoreRegistration />,
+  },
+  {
+    path: "customer-regist",
+    element: <CustomerRegistration />,
+  },
 ];
 const AppRoutes = () => (
   <Router>
     <Routes>
       <Route element={<App />}>
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<LoginForm />} />
         <Route path={USER_URLS.AUTH.LOGIN} element={<UserLogin />} />
         <Route path={USER_URLS.AUTH.REGISTER} element={<UserRegister />} />
         <Route path="/" element={<DashboardLayout />} />

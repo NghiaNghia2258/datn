@@ -2,10 +2,11 @@ import { Box, Card } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { motion } from "framer-motion";
 import React, { useState } from "react";
-import { DEFAULT_ROUTE } from "../constant";
+import { DEFAULT_ROUTE, DEFAULT_ROUTE_1 } from "../constant";
 import { useNavigate } from "react-router-dom";
 import { NavbarItemModel } from "../type";
 export const Navbar: React.FC = () => {
+  const role = localStorage.getItem("role");
   return (
     <Card
       sx={{
@@ -42,7 +43,7 @@ export const Navbar: React.FC = () => {
           },
         }}
       >
-        {DEFAULT_ROUTE.map((item, index) => {
+        {(role == "1" ? DEFAULT_ROUTE_1 : DEFAULT_ROUTE).map((item, index) => {
           return (
             <NavItem
               key={index}

@@ -59,7 +59,8 @@ export default class PaymentService {
       const res = await axios.GET("payment/createpaymenturl", {
         params: {
           money: model.totalPrice,
-          description: "Payment"
+          description: "Payment",
+          shippingId: model.selectedAddressId
         },
       });
       window.open(res, "_blank");
