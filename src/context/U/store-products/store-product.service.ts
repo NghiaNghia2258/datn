@@ -31,6 +31,10 @@ export default class StoreProductService {
     const response = await axios.GET(`store/store-info-customer/${storeId}`);
     return response.data;
   }
+  static async getStoreInfoByProduct(productId: string): Promise<Store> {
+    const response = await axios.GET(`store/store-info-product/${productId}`);
+    return response.data;
+  }
 
   static async GetProduct(option:OptionFilter): Promise<ApiResult<Product[]>> {
     const response = await axios.GET(`home/get-product-for-store`, {

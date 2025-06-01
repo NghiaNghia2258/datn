@@ -5,17 +5,25 @@ import CommonTable from "../../../components/common/table";
 import CommonPage from "../../../components/common/page";
 import { CommonCart } from "../../../components/common/card";
 import { useViewOrder } from "../../../context/A/view-orders";
+import { useNavigateCommon } from "../../../hooks/navigate";
 
 const FeatViewOrders = () => {
-  const { orders, loading, getListOrders, setTextSearch, textSearch } =
-    useViewOrder();
+  const {
+    orders,
+    loading,
+    getListOrders,
+    setTextSearch,
+    textSearch,
+    totalRows,
+  } = useViewOrder();
   const { showToast } = useToast();
+  const navigate = useNavigateCommon();
 
   const [pagingOptions, setPagingOptions] = useState({
     currentPage: 0,
-    rowsPerPage: 10,
+    rowsPerPage: 2,
     totalRows: 10,
-    rowsPerPageOptions: [10, 20, 50],
+    rowsPerPageOptions: [2, 4, 6],
   });
 
   const handleSearch = useCallback(
@@ -30,11 +38,18 @@ const FeatViewOrders = () => {
   );
 
   useEffect(() => {
+    setPagingOptions({
+      ...pagingOptions,
+      totalRows: totalRows,
+    });
+  }, [totalRows]);
+
+  useEffect(() => {
     getListOrders({
       pageIndex: pagingOptions.currentPage,
       pageSize: pagingOptions.rowsPerPage,
     });
-  }, [pagingOptions]);
+  }, [pagingOptions.currentPage, pagingOptions.rowsPerPage]);
 
   const columns = [
     {
@@ -78,7 +93,7 @@ const FeatViewOrders = () => {
       <CommonCart>
         <CommonTable
           fullWidth
-          enableActions={false}
+          enableActions
           loading={loading}
           showInputSearch
           showButtonAdd={false}
@@ -89,6 +104,7 @@ const FeatViewOrders = () => {
             setTextSearch(value);
             await handleSearch(value);
           }}
+          onEditRow={(row) => navigate(`dashboard/order-detail/${row.id}`)}
           pagingOptions={{
             ...pagingOptions,
             onPageChange: (newPage) =>

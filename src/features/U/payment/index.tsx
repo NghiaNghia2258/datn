@@ -1385,7 +1385,9 @@ const CheckoutPage: React.FC = () => {
         </DialogContent>
         <DialogActions sx={{ justifyContent: "center", pb: 3 }}>
           <Button variant="outlined">Xem chi tiết đơn hàng</Button>
-          <Button variant="contained">Tiếp tục mua sắm</Button>
+          <Button onClick={() => navigate("home")} variant="contained">
+            Tiếp tục mua sắm
+          </Button>
         </DialogActions>
       </Dialog>
 

@@ -10,19 +10,12 @@ import {
   Tooltip,
 } from "@mui/material";
 import { VerifiedUser, Storefront, Message } from "@mui/icons-material";
-import { useStoreProduct } from "../../../../context/U/store-products";
-import { useEffect, useState } from "react";
+import { useProductDetail } from "../../../../context/U/product-detail";
+import { useNavigateCommon } from "../../../../hooks/navigate";
 
-export function StoreHeader() {
-  const [followStore, setFollowStore] = useState<boolean>(false);
-  const { storeData } = useStoreProduct();
-
-  useEffect(() => {
-    setFollowStore(storeData.isFollow);
-  }, [storeData.isFollow]);
-  const handleFollowStore = () => {
-    setFollowStore(!followStore);
-  };
+export function CardStore() {
+  const { storeData } = useProductDetail();
+  const navigate = useNavigateCommon();
 
   return (
     <Box
@@ -117,16 +110,16 @@ export function StoreHeader() {
           <Grid item xs={12} md={4}>
             <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
               <Button
-                variant={followStore ? "outlined" : "contained"}
+                variant={"outlined"}
                 startIcon={<Storefront />}
-                onClick={handleFollowStore}
+                onClick={() => navigate(`store-products/${storeData.id}`)}
                 sx={{
                   borderColor: "white",
-                  color: followStore ? "white" : "inherit",
+                  color: "inherit",
                   mr: 1,
                 }}
               >
-                {followStore ? "Đã theo dõi" : "Theo dõi shop"}
+                Truy cập shop
               </Button>
 
               <Button

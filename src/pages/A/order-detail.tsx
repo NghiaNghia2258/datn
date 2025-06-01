@@ -145,7 +145,7 @@ const OrderDetail = () => {
           <ArrowBack />
         </IconButton>
         <Typography variant="h4" component="h1">
-          Chi tiết đơn hàng #{order.code}
+          Chi tiết đơn hàng
         </Typography>
         <Box sx={{ ml: "auto" }}>
           <Button
@@ -154,7 +154,7 @@ const OrderDetail = () => {
             onClick={() => setOpenStatusDialog(true)}
             color="primary"
           >
-            Cập nhật trạng thái
+            Trạng thái
           </Button>
         </Box>
       </Stack>

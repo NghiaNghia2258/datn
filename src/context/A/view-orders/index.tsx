@@ -17,6 +17,7 @@ interface OrderContextType {
   setLoading: (loading: boolean) => void;
   getListOrders: (option?: RequestGetAllOrders) => Promise<void>;
   setOrderEdit: (value: ResponseGetAllOrders) => void;
+  totalRows: number;
 }
 
 export const OrderContext = createContext<OrderContextType | undefined>(
@@ -30,12 +31,14 @@ export const OrderProvider: React.FC<{ children: ReactNode }> = ({
   const [loading, setLoading] = useState<boolean>(false);
   const [textSearch, setTextSearch] = useState<string>("");
   const [orderEdit, setOrderEdit] = useState<ResponseGetAllOrders | null>(null);
+  const [totalRows, setTotalRow] = useState<number>(0);
 
   const getListOrders = async (option?: RequestGetAllOrders) => {
     setLoading(true);
     try {
       const response = await OrderService.getAll(option);
-      setOrders(response.items || []); // giả sử API trả về { items, totalRows }
+      setOrders(response.items || []);
+      setTotalRow(response.totalRows);
     } catch (error) {
       console.error(error);
     } finally {
@@ -50,6 +53,7 @@ export const OrderProvider: React.FC<{ children: ReactNode }> = ({
   return (
     <OrderContext.Provider
       value={{
+        totalRows,
         orders,
         loading,
         textSearch,

@@ -30,6 +30,7 @@ import { useProductDetail } from "../../../context/U/product-detail";
 import { formatPrice } from "../../../utils/format-price";
 import ReviewModal from "./review";
 import ComboExample from "./test";
+import { CardStore } from "./card-store";
 
 // Các sản phẩm tương tự
 const relatedProducts = [
@@ -75,6 +76,9 @@ const ProductDetailPage = () => {
       />
       <ProductDetailMainSection />
       <ComboExample />
+      <div style={{ margin: "10px 0" }}>
+        <CardStore />
+      </div>
       {/* Product Details Tabs */}
       <Box sx={{ mt: 6 }}>
         <Paper sx={{ borderRadius: 2, overflow: "hidden" }} elevation={1}>

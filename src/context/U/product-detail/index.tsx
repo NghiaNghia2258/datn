@@ -11,6 +11,8 @@ import { Review } from "./response";
 import ProductDetailService from "./service";
 import { useParams } from "react-router-dom";
 import ProductService from "../../../services/product.service";
+import StoreProductService from "../store-products/store-product.service";
+import { STORE_DEFAULT } from "../store-products/constant";
 
 interface ProductDetailContextType {
   id: string | undefined;
@@ -37,6 +39,7 @@ interface ProductDetailContextType {
   openPopupReview: boolean;
   totalRV: number;
   avgRV: number;
+  storeData: any;
 }
 
 export const ProductDetailContext = createContext<
@@ -59,6 +62,7 @@ export const ProductDetailProvider: React.FC<{ children: ReactNode }> = ({
   const [product, setProduct] = useState<IProductCreateSchema>(productData);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [openPopupReview, setOpenPopupReview] = useState(false);
+  const [storeData, setStoreData] = useState(STORE_DEFAULT);
   const [totalRV, setTotalRV] = useState(0);
   const [avgRV, setAvgRV] = useState(0);
 
@@ -76,7 +80,10 @@ export const ProductDetailProvider: React.FC<{ children: ReactNode }> = ({
       setIsLoadingReviews(false);
     }
   };
-
+  const getStoreData = async () => {
+    const res = await StoreProductService.getStoreInfoByProduct(id);
+    setStoreData(res);
+  };
   const getProductDetail = async () => {
     try {
       if (!id) return;
@@ -114,10 +121,12 @@ export const ProductDetailProvider: React.FC<{ children: ReactNode }> = ({
   useEffect(() => {
     getReviews();
     getProductDetail();
+    getStoreData();
   }, [id]);
   return (
     <ProductDetailContext.Provider
       value={{
+        storeData,
         id,
         totalRV,
         avgRV,

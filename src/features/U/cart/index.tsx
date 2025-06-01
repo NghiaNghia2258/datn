@@ -330,7 +330,11 @@ const ShoppingCart: React.FC = () => {
           <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
             Hãy thêm sản phẩm vào giỏ hàng để tiếp tục mua sắm
           </Typography>
-          <Button variant="contained" color="primary">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => navigate("home")}
+          >
             Tiếp tục mua sắm
           </Button>
         </Paper>
