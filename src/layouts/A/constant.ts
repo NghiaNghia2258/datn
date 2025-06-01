@@ -59,10 +59,6 @@ export const DEFAULT_ROUTE: NavbarItemModel[] = [
     icon: Groups,
     children: [
       {
-        title: "Danh sách chiến dịch",
-        path: "/",
-      },
-      {
         title: "Danh sách voucher",
         path: "vouchers",
       },
@@ -70,19 +66,17 @@ export const DEFAULT_ROUTE: NavbarItemModel[] = [
         title: "Tạo voucher",
         path: "add",
       },
-      {
-        title: "Tạo bundle",
-        path: "add/bundle",
-      },
-      {
-        title: "Tạo volume",
-        path: "add/voulme",
-      },
+     
     ],
   },
 ];
 
 export const DEFAULT_ROUTE_1: NavbarItemModel[] = [
+  {
+    title: "Trang chủ",
+    path: "",
+    icon: Home,
+  },
   {
     title: "Đơn hàng",
     path: "orders",

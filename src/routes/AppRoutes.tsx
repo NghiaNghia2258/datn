@@ -30,6 +30,7 @@ import LoginForm from "../pages/login";
 import ViewOrders from "../pages/A/order";
 import FeatViewStores from "../pages/A/view-store";
 import StoreDetailManagement from "../pages/A/store-detail";
+import VoucherForm from "../pages/A/create-update-voucher";
 
 export const DASHBOARD_URLS = {
   EMPLOYEE: {
@@ -134,6 +135,10 @@ const dashboardRoutes = [
   {
     path: "dashboard/store-detail/:id",
     element: <StoreDetailManagement />,
+  },
+  {
+    path: "dashboard/discounts/add",
+    element: <VoucherForm />,
   },
 ];
 
