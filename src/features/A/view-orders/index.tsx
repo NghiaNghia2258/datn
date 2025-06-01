@@ -37,35 +37,39 @@ const FeatViewOrders = () => {
   }, [pagingOptions]);
 
   const columns = [
-    { id: "code", label: "Mã hóa đơn", align: "left" as const },
+    {
+      id: "code",
+      label: "Mã hóa đơn",
+      align: "left" as const,
+      render: (row) => <p>{row.split("-")[0]}</p>,
+    },
     { id: "customerName", label: "Khách hàng", align: "left" as const },
     { id: "customerPhone", label: "SĐT", align: "left" as const },
     {
       id: "paymentStatus",
       label: "Trạng thái thanh toán",
       align: "left" as const,
-      format: (value: number) =>
-        value === 1 ? "Chưa thanh toán" : "Đã thanh toán",
+      render: (value) => (value === 1 ? "Chưa thanh toán" : "Đã thanh toán"),
     },
     {
       id: "totalPrice",
       label: "Tổng tiền",
-      align: "right" as const,
-      format: (value: number) =>
+      align: "left" as const,
+      render: (value: number) =>
         value.toLocaleString("vi-VN", { style: "currency", currency: "VND" }),
     },
     {
       id: "discountValue",
       label: "Chiết khấu",
-      align: "right" as const,
-      format: (value: number) =>
+      align: "left" as const,
+      render: (value: number) =>
         value?.toLocaleString("vi-VN", { style: "currency", currency: "VND" }),
     },
     {
       id: "createdAt",
       label: "Ngày tạo",
       align: "left" as const,
-      format: (value: string) => new Date(value).toLocaleString("vi-VN"),
+      render: (row) => <p>{new Date(row).toLocaleString("vi-VN")}</p>,
     },
   ];
 

@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
 import App from "../App";
-import Login from "../pages/A/Login";
 import { DashboardLayout } from "../layouts/A";
 import ViewEmployee from "../pages/A/view-employees";
 import ViewProduct from "../pages/A/View-Product";
@@ -125,6 +124,10 @@ const dashboardRoutes = [
     element: <ViewOrders />,
   },
   {
+    path: `dashboard/order-detail/:orderId`,
+    element: <OrderDetail />,
+  },
+  {
     path: `dashboard/stores`,
     element: <FeatViewStores />,
   },
@@ -180,7 +183,7 @@ const AppRoutes = () => (
         <Route path="/login" element={<LoginForm />} />
         <Route path={USER_URLS.AUTH.LOGIN} element={<UserLogin />} />
         <Route path={USER_URLS.AUTH.REGISTER} element={<UserRegister />} />
-        <Route path="/" element={<DashboardLayout />} />
+        <Route path="/dashboard" element={<DashboardLayout />} />
         <Route path="/" element={<DashboardLayout />}>
           {dashboardRoutes.map(({ path, element }) => (
             <Route key={path} path={path} element={element} />

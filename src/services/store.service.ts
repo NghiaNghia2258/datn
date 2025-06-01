@@ -22,7 +22,7 @@ export default class StoreService {
           pageIndex : (options?.pageIndex ?? 0) + 1
         },
       });
-        return response;
+      return response;
   }
   static async Active(id: string): Promise<ResponseGetAllStores[]> {
     const response = await axios.GET(`store/active-store/${id}`);
