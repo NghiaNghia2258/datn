@@ -88,6 +88,8 @@ export const ProductDetailProvider: React.FC<{ children: ReactNode }> = ({
     try {
       if (!id) return;
       const res = await ProductService.GetOne(id);
+      setCurrentPrice(res.price);
+      setCurrentStock(res.totalInventory);
       setProduct(res);
     } catch (error) {
       console.error("Error fetching product:", error);

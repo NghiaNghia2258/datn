@@ -107,7 +107,6 @@ const FeatCustomerLogin = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(formData);
 
     if (!validateForm()) return;
 

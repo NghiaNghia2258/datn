@@ -144,7 +144,7 @@ function App() {
     };
     featchData();
     setLoading(false);
-  }, []);
+  }, [searchKey]);
 
   // Filter and sort products
   const filteredProducts = products

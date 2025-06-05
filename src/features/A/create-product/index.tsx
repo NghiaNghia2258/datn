@@ -59,17 +59,24 @@ const FeatCreateProduct: FC = () => {
     fetchData();
   }, [productId]);
   const onSubmit = async () => {
+    let res;
     if (productId)
-      await ProductService.update(formData as IProductCreateSchema);
+      res = await ProductService.update(formData as IProductCreateSchema);
     else {
       const check = validateForm();
-      console.log(formData);
 
       if (check) {
         showToast("Vui lòng điền đầy đủ thông tin");
         return;
       }
-      await ProductService.create(formData as IProductCreateSchema);
+      res = await ProductService.create(formData as IProductCreateSchema);
+    }
+    console.log(res);
+
+    if (res) {
+      showToast("Tạo sản phẩm thành công");
+    } else {
+      showToast("Có lỗi xảy ra, vui lòng thử lại");
     }
   };
   return (

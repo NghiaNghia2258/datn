@@ -27,7 +27,6 @@ export const Variant = () => {
 
   const propertyValue1 = formData.propertyValue1 ?? [];
   const propertyValue2 = formData.propertyValue2 ?? [];
-  console.log(propertyValue1);
 
   useEffect(() => {
     if (propertyValue1.length > 0 && propertyValue2.length > 0) {

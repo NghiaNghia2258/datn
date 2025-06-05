@@ -37,7 +37,7 @@ export default class ProductService{
       })
       model.productVariants = await Promise.all(variants);
       const res = await axios.POST("product", model);
-      return res.data;
+      return res.isSucceeded;
     }
     
     static async update(model:IProductCreateSchema): Promise<void> {
@@ -55,7 +55,7 @@ export default class ProductService{
       })
       model.productVariants = await Promise.all(variants);
       const res = await axios.PUT("product", model);
-      return res.data;
+      return res.isSucceeded;
     }
     static async GetOne(id:string): Promise<IProductCreateSchema>{
       const response = await axios.GET(`product/${id}`);

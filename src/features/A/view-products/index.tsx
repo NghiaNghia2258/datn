@@ -24,19 +24,19 @@ export const FeatViewProducts: FC = () => {
       id: "name",
       flex: 3,
       label: "Sản phẩm",
-      render: (row) => (
-        <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
-          <CommonImage
-            width={34}
-            height={34}
-            borderRadius={2}
-            src={
-              "https://pos.nvncdn.com/778773-105877/ps/20230529_5xEM0bU9mm.jpeg"
-            }
-          />
-          <Typography>{row}</Typography>
-        </Box>
-      ),
+      render: (_, row) => {
+        return (
+          <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
+            <CommonImage
+              width={34}
+              height={34}
+              borderRadius={2}
+              src={row.mainImageUrl ?? row.imageUrl}
+            />
+            <Typography>{row.name}</Typography>
+          </Box>
+        );
+      },
     },
     {
       id: "propertyValue1",
