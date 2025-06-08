@@ -75,7 +75,6 @@ const ProductDetailPage = () => {
         productName={product.name}
       />
       <ProductDetailMainSection />
-      <ComboExample />
       <div style={{ margin: "10px 0" }}>
         <CardStore />
       </div>

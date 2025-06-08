@@ -54,6 +54,7 @@ import { CartItem } from "../cart/type";
 import { Address, Voucher } from "./payment.response";
 import { formatPrice } from "../../../utils/format-price";
 import PaymentService from "../../../context/U/payment/payment.service";
+import { useNavigateCommon } from "../../../hooks/navigate";
 
 // Interface cho phương thức thanh toán
 interface PaymentMethod {
@@ -82,20 +83,6 @@ const paymentMethods: PaymentMethod[] = [
     description: "Thanh toán bằng tiền mặt khi nhận được hàng",
   },
   {
-    id: "CREDIT_CARD",
-    type: "CREDIT_CARD",
-    name: "Thẻ tín dụng/Ghi nợ",
-    icon: <CreditCardIcon />,
-    description: "Thanh toán bằng thẻ Visa, MasterCard, JCB",
-  },
-  {
-    id: "BANK_TRANSFER",
-    type: "BANK_TRANSFER",
-    name: "Chuyển khoản ngân hàng",
-    icon: <AccountBalanceIcon />,
-    description: "Chuyển khoản qua các ngân hàng nội địa",
-  },
-  {
     id: "VNPay",
     type: "E_WALLET",
     name: "Ví điện tử",
@@ -109,21 +96,21 @@ const shippingMethods: ShippingMethod[] = [
   {
     id: "shipping-1",
     name: "Giao hàng tiêu chuẩn",
-    price: 30000,
+    price: 0,
     estimatedTime: "3-5 ngày",
     icon: <LocalShippingIcon />,
   },
   {
     id: "shipping-2",
     name: "Giao hàng nhanh",
-    price: 50000,
+    price: 0,
     estimatedTime: "1-2 ngày",
     icon: <LocalShippingIcon />,
   },
   {
     id: "shipping-3",
     name: "Giao hàng hỏa tốc",
-    price: 100000,
+    price: 0,
     estimatedTime: "Trong ngày",
     icon: <LocalShippingIcon />,
   },
@@ -176,6 +163,7 @@ const CheckoutPage: React.FC = () => {
   ];
 
   // State cho thông tin địa chỉ và thanh toán
+  const navigate = useNavigateCommon();
   const [addresses, setAddresses] = useState<Address[]>([]);
   const [vouchers, setVouchers] = useState<Voucher[]>([]);
   const [selectedAddressId, setSelectedAddressId] = useState<string>("");

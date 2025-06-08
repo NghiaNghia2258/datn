@@ -8,7 +8,9 @@ interface DashboardProps {}
 export const UserLayout: React.FC<DashboardProps> = () => {
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <Header />
+      <div style={{ marginBottom: 80 }}>
+        <Header />
+      </div>
       <Outlet />
       <Footer />
     </Box>

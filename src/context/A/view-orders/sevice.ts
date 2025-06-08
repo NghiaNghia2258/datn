@@ -6,6 +6,12 @@ export default class OrderService {
   static async getAll(
     options?: RequestGetAllOrders
   ): Promise<{ items: ResponseGetAllOrders[]; totalRows: number }> {
+    if(!options?.pageSize){
+      return {
+        items:[],
+        totalRows:0
+      }
+    }
     const response = await axios.GET(`home/get-orders`, {
       params: {
         ...options,

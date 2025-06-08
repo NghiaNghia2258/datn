@@ -6,6 +6,7 @@ export default class CartService {
     return res.data.cartItems;
   }
   static async removeProductFromCart(productId: string): Promise<void>{
-    console.log("remove from cart productId", productId);
+    const res = await axios.GET(`customer/remove-from-cart/${productId}`);
+    return res
   }
 }

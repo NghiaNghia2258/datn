@@ -126,7 +126,11 @@ const Header = () => {
               <ShoppingCartIcon />
             </Badge>
           </IconButton>
-          <IconButton size="large" color="inherit">
+          <IconButton
+            size="large"
+            color="inherit"
+            onClick={() => navigate("/profile")}
+          >
             <PersonIcon />
           </IconButton>
         </Box>

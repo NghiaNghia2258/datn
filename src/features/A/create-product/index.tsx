@@ -15,6 +15,7 @@ import { useToast } from "../../../context/toast";
 import { useCreateUpdateProduct } from "../../../context/A/create-product";
 import { SpecifiAttribute } from "./specifi-attribute";
 import { ProductBrandForm } from "./brand";
+import { useNavigate } from "react-router-dom";
 const default_value = {
   name: "",
   categoryId: undefined,
@@ -43,6 +44,7 @@ const FeatCreateProduct: FC = () => {
   const { productId } = useCreateUpdateProduct();
   const { formData, validateForm, setSchema, setFieldValue, setFormData } =
     useValidation<IProductCreateSchema>();
+  const navigate = useNavigate();
   useEffect(() => {
     setSchema(ProductCreateSchema);
     setFormData(default_value);
@@ -71,16 +73,16 @@ const FeatCreateProduct: FC = () => {
       }
       res = await ProductService.create(formData as IProductCreateSchema);
     }
-    console.log(res);
 
     if (res) {
-      showToast("Tạo sản phẩm thành công");
+      showToast("Thành công");
+      navigate("/dashboard/products");
     } else {
       showToast("Có lỗi xảy ra, vui lòng thử lại");
     }
   };
   return (
-    <CommonPage title="Thêm mới sản phẩm">
+    <CommonPage title={productId ? "Sửa sản phẩm" : "Thêm mới sản phẩm"}>
       <Box sx={{ display: "flex", gap: 2 }}>
         <Box sx={{ flex: 2, display: "flex", flexDirection: "column", gap: 2 }}>
           <ProductBasicInfo />

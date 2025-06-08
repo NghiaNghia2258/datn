@@ -10,6 +10,9 @@ const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 export default class ProductService{
 
     static async getAll(options?:RequestGetALlProducts): Promise<ResponseGetAllProducts[]>{
+        if(!options?.pageSize){
+          return []
+        }
         const response = await axios.GET(`product`, {
           params: {
             ...options,
@@ -45,7 +48,7 @@ export default class ProductService{
         const url = await UploadService.upload(file);
         return url;
       }));
-      model.existingUrls = [...model.existingUrls,...urls];
+      model.existingUrls = [...model.existingUrls,...urls].filter(x => !model.removedUrls.includes(x));
       const variants =  model.productVariants.map(async (variant) => {
         const url = await UploadService.upload(variant.image);
         return {

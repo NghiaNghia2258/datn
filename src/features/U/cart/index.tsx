@@ -432,20 +432,6 @@ const ShoppingCart: React.FC = () => {
     setNotification((prev) => ({ ...prev, open: false }));
   };
 
-  // Xử lý thêm tất cả sản phẩm trong bundle vào giỏ hàng
-  const handleAddBundle = (bundle: Bundle) => {
-    // Chọn tất cả sản phẩm thuộc bundle
-    setCartItems((prev) =>
-      prev.map((item) =>
-        bundle.requiredItems.includes(item.id)
-          ? { ...item, isSelected: true }
-          : item
-      )
-    );
-
-    showNotification(`Đã áp dụng combo "${bundle.name}"`, "success");
-  };
-
   // Xử lý checkout
   const handleCheckout = () => {
     if (cartSummary.totalItems === 0) {
@@ -485,8 +471,6 @@ const ShoppingCart: React.FC = () => {
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
-      <CartPreview cartItems={cartItems} />
-
       <Typography
         variant="h4"
         gutterBottom

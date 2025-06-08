@@ -35,7 +35,7 @@ export default function LoginForm() {
     if (res.data.roleId === 2) {
       navigate("home");
     } else {
-      navigate("dashboard/products");
+      navigate("dashboard");
     }
   };
 

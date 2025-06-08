@@ -65,6 +65,13 @@ export default class PaymentService {
       });
       window.open(res, "_blank");
     }
+    else{
+     await axios.GET("payment/cod", {
+        params: {
+          shippingId: model.selectedAddressId
+        },
+      });
+    }
     
   }
   static async removeProductFromCart(productId: string): Promise<void>{
