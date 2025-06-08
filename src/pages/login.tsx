@@ -135,7 +135,11 @@ export default function LoginForm() {
               <Box sx={{ textAlign: "center", mt: 2 }}>
                 <Typography variant="body2" color="text.secondary">
                   Chưa có tài khoản?{" "}
-                  <Button variant="text" size="small">
+                  <Button
+                    variant="text"
+                    size="small"
+                    onClick={() => navigate("customer-regist")}
+                  >
                     Đăng ký ngay
                   </Button>
                 </Typography>

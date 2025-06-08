@@ -29,7 +29,6 @@ import ProductDetailMainSection from "./main-section";
 import { useProductDetail } from "../../../context/U/product-detail";
 import { formatPrice } from "../../../utils/format-price";
 import ReviewModal from "./review";
-import ComboExample from "./test";
 import { CardStore } from "./card-store";
 
 // Các sản phẩm tương tự

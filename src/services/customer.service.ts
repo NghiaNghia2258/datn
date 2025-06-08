@@ -7,37 +7,16 @@ const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export default class CustomerService {
   static async getAll(options?: RequestGetAllCustomers): Promise<Customer[]> {
-    console.log("getAll Customers", options);
-    await delay(2000);
-
-    const res: Customer[] = [
-      {
-        id: "cus01",
-        name: "Nguyễn Thị A",
-        email: "a@gmail.com",
-        phone: "0912345678",
-        password:"",
-        isActive: true,
+    if(!options?.pageSize){
+      return []
+    }
+    const response = await axios.GET(`customer`, {
+      params: {
+        ...options,
+        pageIndex : (options?.pageIndex ?? 0) + 1
       },
-      {
-        id: "cus02",
-        name: "Trần Văn B",
-        email: "b@gmail.com",
-        phone: "0987654321",
-        password:"",
-        isActive: false,
-      },
-      {
-        id: "cus03",
-        name: "Lê Văn C",
-        email: "c@gmail.com",
-        phone: "0909123456",
-        password:"",
-        isActive: true,
-      },
-    ];
-
-    return res;
+    });
+      return response;
   }
 
   static async delete(id: string): Promise<void> {

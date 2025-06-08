@@ -3,8 +3,8 @@ import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { motion } from "framer-motion";
 import React, { useState } from "react";
 import { DEFAULT_ROUTE, DEFAULT_ROUTE_1 } from "../constant";
-import { useNavigate } from "react-router-dom";
 import { NavbarItemModel } from "../type";
+import { useNavigateCommon } from "../../../hooks/navigate";
 export const Navbar: React.FC = () => {
   const role = localStorage.getItem("role");
   return (
@@ -66,7 +66,7 @@ const NavItem: React.FC<NavbarItemModel> = ({
   children = [],
 }) => {
   const [open, setOpen] = useState(false);
-  const navigate = useNavigate();
+  const navigate = useNavigateCommon();
 
   return (
     <Box>
@@ -81,7 +81,11 @@ const NavItem: React.FC<NavbarItemModel> = ({
         }}
         onClick={() => {
           if (!open) {
-            navigate(`/dashboard/${path}`);
+            if (path === "login") {
+              navigate(`login`);
+            } else {
+              navigate(`/dashboard/${path}`);
+            }
           }
           setOpen(!open);
         }}

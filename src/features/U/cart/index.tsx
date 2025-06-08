@@ -21,8 +21,6 @@ import {
   TableBody,
   TableRow,
   TableCell,
-  Card,
-  CardContent,
   Chip,
   Stack,
 } from "@mui/material";
@@ -35,8 +33,6 @@ import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import ErrorIcon from "@mui/icons-material/Error";
-import CartPreview from "./preview";
 import { formatPrice } from "../../../utils/format-price";
 import { CartItem } from "../../../context/U/cart/cart.response";
 import CartService from "../../../context/U/cart/cart.service";
@@ -50,17 +46,6 @@ interface ExtendedCartItem extends CartItem {
   bundleName?: string;
   discountRate?: number;
   isPartOfBundle?: boolean;
-}
-
-// Interface cho Bundle
-interface Bundle {
-  id: string;
-  name: string;
-  shopId: string;
-  requiredItems: string[]; // Danh sách ID sản phẩm cần có để kích hoạt bundle
-  discountRate: number; // Tỷ lệ giảm giá (ví dụ: 0.1 = 10%)
-  description: string;
-  thumbnailUrl?: string;
 }
 
 // Interface cho Voucher
@@ -83,12 +68,6 @@ interface Voucher {
   version: number;
 }
 
-// Interface cho Applied Voucher (voucher đã áp dụng)
-interface AppliedVoucher {
-  shopId: string;
-  voucher: Voucher;
-  discountAmount: number;
-}
 // Service cho Voucher
 const VoucherService2 = {
   validateVoucher: async (
@@ -130,7 +109,6 @@ const VoucherService2 = {
       if (now > expirationDate) {
         return { isValid: false, error: "Voucher đã hết hạn" };
       }
-
       return { isValid: true, voucher: mockVoucher };
     } catch (error) {
       return { isValid: false, error: "Có lỗi xảy ra khi kiểm tra voucher" };
@@ -142,7 +120,8 @@ const ShoppingCart: React.FC = () => {
   const navigate = useNavigateCommon();
 
   const [cartItems, setCartItems] = useState<ExtendedCartItem[]>([]);
-  const [appliedVouchers, setAppliedVouchers] = useState<AppliedVoucher[]>([]);
+  const [appliedVouchers, setAppliedVouchers] = useState<any[]>([]);
+
   const [voucherInputs, setVoucherInputs] = useState<{
     [shopId: string]: string;
   }>({}); // Input voucher cho mỗi shop
@@ -163,7 +142,8 @@ const ShoppingCart: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       const res = await CartService.getCart();
-      setCartItems(res);
+      setCartItems(res.cartItems);
+      setAppliedVouchers(res.vouchers);
     };
     fetchData();
   }, []);
@@ -233,7 +213,6 @@ const ShoppingCart: React.FC = () => {
         finalTotal,
       };
     });
-
     return totals;
   }, [shopGroups, appliedVouchers]);
 
@@ -384,13 +363,14 @@ const ShoppingCart: React.FC = () => {
           result.voucher,
           orderValue
         );
-
+        await VoucherService.useVoucher(voucherCode, discountAmount);
         setAppliedVouchers((prev) => [
           ...prev,
           {
             shopId,
-            voucher: result.voucher!,
             discountAmount,
+            code: voucherCode,
+            title: result.voucher?.title,
           },
         ]);
 
@@ -409,7 +389,8 @@ const ShoppingCart: React.FC = () => {
   };
 
   // Xử lý xóa voucher
-  const handleRemoveVoucher = (shopId: string) => {
+  const handleRemoveVoucher = async (shopId: string, code: string) => {
+    await VoucherService.removeVoucher(code);
     setAppliedVouchers((prev) => prev.filter((v) => v.shopId !== shopId));
     setVoucherInputs((prev) => ({ ...prev, [shopId]: "" }));
     showNotification("Đã xóa voucher", "info");
@@ -439,7 +420,8 @@ const ShoppingCart: React.FC = () => {
       return;
     }
     localStorage.setItem("cart", JSON.stringify(cartItems));
-    localStorage.setItem("appliedVouchers", JSON.stringify(appliedVouchers));
+    localStorage.setItem("discountValue", cartSummary.voucherDiscount);
+    debugger;
     navigate(USER_URLS.PAYMENT);
   };
 
@@ -512,6 +494,7 @@ const ShoppingCart: React.FC = () => {
                 (v) => v.shopId === shopGroup.shopId
               );
               const shopTotal = shopTotals[shopGroup.shopId];
+              console.log(shopTotal);
 
               return (
                 <Box key={shopGroup.shopId} sx={{ mb: 4 }}>
@@ -775,8 +758,7 @@ const ShoppingCart: React.FC = () => {
                               fontWeight="bold"
                               color="success.dark"
                             >
-                              {appliedVoucher.voucher.voucherCode} -{" "}
-                              {appliedVoucher.voucher.title}
+                              {appliedVoucher.code} - {appliedVoucher.title}
                             </Typography>
                             <Typography variant="body2" color="success.dark">
                               Giảm {formatPrice(appliedVoucher.discountAmount)}
@@ -785,7 +767,12 @@ const ShoppingCart: React.FC = () => {
                         </Box>
                         <IconButton
                           size="small"
-                          onClick={() => handleRemoveVoucher(shopGroup.shopId)}
+                          onClick={() =>
+                            handleRemoveVoucher(
+                              shopGroup.shopId,
+                              appliedVoucher.code
+                            )
+                          }
                           color="error"
                         >
                           <DeleteIcon fontSize="small" />
@@ -1051,7 +1038,7 @@ const ShoppingCart: React.FC = () => {
                     >
                       <Box>
                         <Typography variant="body2" fontWeight="bold">
-                          {applied.voucher.voucherCode}
+                          {applied.code}
                         </Typography>
                         <Typography variant="caption" color="text.secondary">
                           {shop?.shopName}

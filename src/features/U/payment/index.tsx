@@ -267,34 +267,7 @@ const CheckoutPage: React.FC = () => {
   }, [selectedShippingMethodId]);
 
   // Tính giảm giá từ voucher
-  const discount = React.useMemo(() => {
-    if (!appliedVoucherId) return 0;
-
-    const voucher = vouchers.find((v) => v.id === appliedVoucherId);
-    if (!voucher) return 0;
-
-    // Kiểm tra điều kiện áp dụng voucher
-    if (subtotal < voucher.minOrderValue) return 0;
-
-    // Tính số tiền giảm giá
-    let discountAmount = 0;
-    if (voucher.discountType === "FIXED") {
-      discountAmount = voucher.discountAmount;
-    } else {
-      // Voucher phần trăm
-      discountAmount = (subtotal * voucher.discountAmount) / 100;
-
-      // Áp dụng giới hạn giảm giá tối đa nếu có
-      if (
-        voucher.maxDiscountAmount &&
-        discountAmount > voucher.maxDiscountAmount
-      ) {
-        discountAmount = voucher.maxDiscountAmount;
-      }
-    }
-
-    return discountAmount;
-  }, [appliedVoucherId, subtotal]);
+  const discount = Number(localStorage.getItem("discountValue") ?? "0");
 
   // Tính tổng thanh toán
   const total = React.useMemo(() => {
@@ -1064,15 +1037,7 @@ const CheckoutPage: React.FC = () => {
                   </Typography>
                 </Box>
               ) : (
-                <Button
-                  variant="outlined"
-                  startIcon={<DiscountIcon />}
-                  fullWidth
-                  onClick={() => setVoucherDialogOpen(true)}
-                  sx={{ mb: 2 }}
-                >
-                  Sử dụng mã giảm giá
-                </Button>
+                <></>
               )}
             </Box>
 

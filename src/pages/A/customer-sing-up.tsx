@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Container,
   Paper,
@@ -14,7 +14,6 @@ import {
   MenuItem,
   InputAdornment,
   Card,
-  CardContent,
   IconButton,
   Divider,
   FormHelperText,
@@ -31,8 +30,10 @@ import {
   CheckCircle,
 } from "@mui/icons-material";
 import AuthService from "../../services/auth.service";
+import { useNavigateCommon } from "../../hooks/navigate";
 
 const CustomerRegistration = () => {
+  const navigate = useNavigateCommon();
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -180,7 +181,11 @@ const CustomerRegistration = () => {
           >
             Đăng ký tài khoản khác
           </Button>
-          <Button variant="outlined" size="large">
+          <Button
+            variant="outlined"
+            size="large"
+            onClick={() => navigate("login")}
+          >
             Đăng nhập
           </Button>
         </Card>

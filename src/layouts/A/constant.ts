@@ -13,7 +13,7 @@ export const DEFAULT_ROUTE: NavbarItemModel[] = [
     icon: Home,
   },
   {
-    title: "Sản phẩm",
+    title: "Quản lý sản phẩm",
     path: "products",
     icon: Fastfood,
     children: [
@@ -28,7 +28,7 @@ export const DEFAULT_ROUTE: NavbarItemModel[] = [
     ],
   },
   {
-    title: "Đơn hàng",
+    title: "Quản lý đơn hàng",
     path: "orders",
     icon: Fastfood,
     children: [
@@ -39,7 +39,7 @@ export const DEFAULT_ROUTE: NavbarItemModel[] = [
     ],
   },
   {
-    title: "Kho hàng",
+    title: "Quản lý kho hàng",
     path: "inbounds",
     icon: Groups,
     children: [
@@ -54,7 +54,7 @@ export const DEFAULT_ROUTE: NavbarItemModel[] = [
     ],
   },
   {
-    title: "Giảm giá",
+    title: "Quản lý mã giảm giá",
     path: "discounts",
     icon: Groups,
     children: [
@@ -69,6 +69,11 @@ export const DEFAULT_ROUTE: NavbarItemModel[] = [
      
     ],
   },
+  {
+    title: "Đăng xuất",
+    path: "login",
+    icon: Home,
+  },
 ];
 
 export const DEFAULT_ROUTE_1: NavbarItemModel[] = [
@@ -78,7 +83,7 @@ export const DEFAULT_ROUTE_1: NavbarItemModel[] = [
     icon: Home,
   },
   {
-    title: "Đơn hàng",
+    title: "Quản lý đơn hàng",
     path: "orders",
     icon: Fastfood,
     children: [
@@ -104,7 +109,7 @@ export const DEFAULT_ROUTE_1: NavbarItemModel[] = [
     ],
   },
   {
-    title: "Khách hàng",
+    title: "Quản lý khách hàng",
     path: "customers",
     icon: Groups,
     children: [
@@ -113,5 +118,21 @@ export const DEFAULT_ROUTE_1: NavbarItemModel[] = [
         path: "/",
       },
     ],
+  },
+  {
+    title: "Quản lý cửa hàng",
+    path: "stores",
+    icon: Groups,
+    children: [
+      {
+        title: "Danh sách cửa hàng",
+        path: "/",
+      },
+    ],
+  },
+  {
+    title: "Đăng xuất",
+    path: "login",
+    icon: Home,
   },
 ]
